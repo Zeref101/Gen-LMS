@@ -38,126 +38,237 @@ export default function Home() {
       description: "This is the first course",
       icon: "https://via.placeholder.com/150",
     },
+    {
+      name: "Course 1",
+      description: "This is the first course",
+      icon: "https://via.placeholder.com/150",
+    },
   ];
 
   const colors = [
-    "blue",
-    "green",
-    "#CCCC00",
-    "purple",
-    "pink",
-    "orange",
-    "indigo",
-    "violet",
-    "cyan",
-    "magenta",
-    "teal",
-    "lime",
-    "brown",
-    "gray",
-    "black",
-    "white",
+    "linear-gradient(90deg, rgba(52,42,204,1) 0%, rgba(68,68,218,1) 40%, rgba(0,212,255,1) 100%)",
+    "radial-gradient( circle farthest-corner at 10% 20%,  rgba(176,229,208,1) 42%, rgba(92,202,238,0.41) 93.6% )",
+    "radial-gradient( circle farthest-corner at 10% 20%,  rgba(249,232,51,1) 0%, rgba(250,196,59,1) 100.2% )",
+    "radial-gradient( circle 897px at 9% 80.3%,  rgba(55,60,245,1) 0%, rgba(234,161,15,0.90) 100.2% )",
+    "linear-gradient( 58.2deg,  rgba(40,91,212,0.73) -3%, rgba(171,53,163,0.45) 49.3%, rgba(255,204,112,0.37) 97.7% )",
+    "radial-gradient( circle farthest-corner at 10% 20%,  rgba(237,3,32,0.87) 20.8%, rgba(242,121,1,0.84) 74.4% )",
+    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    "linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898",
   ];
 
   const progress = [
     {
+      course: "Course 1",
       progress: 0.5,
     },
     {
+      course: "Course 1",
       progress: 0.2,
     },
     {
+      course: "Course 1",
       progress: 0.8,
     },
     {
+      course: "Course 1",
       progress: 0.9,
     },
     {
+      course: "Course 1",
       progress: 0.1,
     },
     {
+      course: "Course 1",
       progress: 0.3,
     },
     {
+      course: "Course 1",
       progress: 0.01,
     },
     {
+      course: "Course 1",
       progress: 0.0001,
     },
     {
+      course: "Course 1",
       progress: 1.0,
     },
     {
+      course: "Course 1",
       progress: 0.2,
     },
     {
+      course: "Course 1",
       progress: 0.5,
     },
     {
+      course: "Course 1",
       progress: 0.5,
+    },
+  ];
+
+  const timelines = [
+    {
+      date: "2021-09-01",
+      time: "12:00",
+      title: "First day of school",
+      description: "I am so excited to start my first day of school",
+    },
+    {
+      date: "2021-09-01",
+      time: "12:00",
+      title: "First day of school",
+      description: "I am so excited to start my first day of school",
+    },
+    {
+      date: "2021-09-01",
+      time: "12:00",
+      title: "First day of school",
+      description: "I am so excited to start my first day of school",
+    },
+    {
+      date: "2021-09-01",
+      time: "12:00",
+      title: "First day of school",
+      description: "I am so excited to start my first day of school",
+    },
+    {
+      date: "2021-09-01",
+      time: "12:00",
+      title: "First day of school",
+      description: "I am so excited to start my first day of school",
+    },
+    {
+      date: "2021-09-01",
+      time: "12:00",
+      title: "First day of school",
+      description: "I am so excited to start my first day of school",
     },
   ];
   const currentDate = new Date().toJSON().slice(0, 10);
   console.log(currentDate);
   return (
-    <div className="flex justify-center items-center w-full gap-5 h-screen">
-      <div className="sidebar w-full h-full">
-        <LeftSidebar></LeftSidebar>
-      </div>
-      <div className="courses overflow-hidden w-full h-full flex flex-col items-center p-10 bg-slate-200 rounded-[100px]">
-        <div className="heading self-start">
-          <h1>Course Activity</h1>
-          <h2>{currentDate}</h2>
-        </div>
-        <div className=" text-slate-700">Courses</div>
-        <div className="h-screen overflow-scroll p-10 overflow-x-hidden w-full">
-          {courses.map((course, index) => {
-            return (
-              <div
-                key={index}
-                style={{
-                  backgroundColor: `${colors[index % colors.length]}`,
-                  // opacity: "0.5",
-                }}
-                className={`my-5 rounded-[50px] text-white h-40 flex justify-center items-center w-full p-8 gap-5`}
-              >
-                <div className="p-2 flex justify-center items-center h-full basis-1/3 w-full">
-                  <img src={course.icon} alt="" />
-                </div>
-                <div className="h-full w-full">
-                  <div className=" font-extrabold text-3xl">{course.name}</div>
-                  <div className="font-semibold text-xl">
-                    {course.description}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      <div className="misc flex flex-col w-full h-full">
-        <div className="topic">Myself</div>
-        <div className="w-full h-full overflow-scroll">
-          <h1 className="text-slate-800 font-semibold text-3xl">My Learning</h1>
-          <div>
-            {progress.map((course, index) => {
-              return (
-                <div>
-                  <div className="text-slate-800 font-semibold text-2xl">{`Course ${
-                    index + 1
-                  }`}</div>
-                  <div className="w-full h-5 bg-slate-400 rounded-[50px]">
-                    <div
-                      className="h-full bg-slate-600 rounded-[50px]"
-                      style={{ width: `${course.progress * 100}%` }}
-                    ></div>
-                  </div>
-                </div>
-              );
-            })}
+    <div className="bg-gray-100 p-10 min-h-screen w-full">
+      <div className="bg-white rounded-3xl shadow-xl overflow-hidden p-6 space-y-6">
+        <div className="flex justify-between items-center">
+          <div className="flex space-x-4 items-center">
+            <div className="bg-blue-500 text-white p-4 rounded-full">
+              <i className="fas fa-book"></i>
+            </div>
+            <div>
+              <h1 className="text-2xl font-semibold">Course Activity</h1>
+              <p className="text-gray-400">
+                {new Date().toJSON().slice(0, 10)}
+              </p>
+            </div>
+          </div>
+          <div className="flex space-x-4 items-center">
+            <button
+              title="hi"
+              className="bg-blue-500 text-white p-2 rounded-full"
+            >
+              <i className="fas fa-plus"></i>
+            </button>
+            <button
+              title="hi"
+              className="bg-red-500 text-white p-2 rounded-full"
+            >
+              <i className="fas fa-heart"></i>
+            </button>
+            <div className="flex items-center space-x-2">
+              <p>Wesley Matthews</p>
+              <img
+                src="https://placehold.co/40x40"
+                alt="Profile picture of Wesley Matthews"
+                className="rounded-full"
+              />
+            </div>
           </div>
         </div>
-        <div className="w-full h-full"></div>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="col-span-2 bg-gray-50 p-4 rounded-2xl space-y-4">
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl font-semibold">Courses</h2>
+              <div className="flex space-x-2">
+                <button
+                  title="hi"
+                  className="bg-blue-500 h-full w-full text-white p-2 rounded-full"
+                >
+                  <i className="fas fa-ellipsis-h"></i>
+                </button>
+                <button
+                  title="hi"
+                  className="bg-blue-500 text-white p-2 rounded-full"
+                >
+                  <i className="fas fa-sync"></i>
+                </button>
+              </div>
+            </div>
+            <div className="space-y-4">
+              {courses.map((course, index) => (
+                <div key={index} className={`flex items-center p-4 rounded-lg`}>
+                  <div
+                    style={{
+                      background: colors[index],
+                    }}
+                    className="flex-grow"
+                  >
+                    <h3 className="text-white font-semibold">{course.name}</h3>
+                    <p className="text-white text-opacity-80 text-sm">
+                      {course.description}
+                    </p>
+                  </div>
+                  <button className="flex-shrink-0 bg-blue-500 h-full p-4 rounded-3xl text-white ml-4">
+                    Enroll
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="space-y-4">
+            <div className="bg-gray-50 p-4 rounded-2xl space-y-4">
+              <h2 className="text-xl font-semibold">My learning</h2>
+              <div className="space-y-2">
+                {progress.map((course, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col justify-between items-center"
+                  >
+                    <div className="flex-grow">
+                      <h1 className="font-semibold">{course.course}</h1>
+                    </div>
+                    <div className="w-full h-4 rounded-3xl bg-slate-300">
+                      <div
+                        style={{ width: `${course.progress * 100}%` }}
+                        className={`h-full rounded-3xl bg-slate-700`}
+                      ></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="bg-gray-50 p-4 rounded-2xl">
+              <h2 className="text-xl font-semibold">Timeline</h2>
+              <div className="flex justify-between items-center mt-4"></div>
+              <div className="mt-4">
+                {timelines.map((event, index) => {
+                  return (
+                    <div key={index} className="flex justify-center items-center">
+                      <div className="desc">
+                        <h3>{event.title}</h3>
+                        <p className="text-slate-400">{event.description}</p>
+                      </div>
+                      <div className="time">
+                        <p className=" whitespace-nowrap text-slate-600">{event.date}</p>
+                        <p className=" whitespace-nowrap text-slate-600">{event.time}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
