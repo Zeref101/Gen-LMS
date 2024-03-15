@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
+import { Toaster } from "./ui/toaster"
+import { useToast } from "./ui/use-toast"
 
 interface MarkdownNotesProps {
     markdown: string;
@@ -9,6 +11,7 @@ interface MarkdownNotesProps {
 
 const MarkdownNotes: React.FC<MarkdownNotesProps> = ({ markdown }) => {
 
+    const { toast } = useToast();
     const [editableMarkdown, setEditableMarkdown] = useState(markdown);
     const [isEditing, setIsEditing] = useState(false);
 
@@ -19,6 +22,15 @@ const MarkdownNotes: React.FC<MarkdownNotesProps> = ({ markdown }) => {
 
     const toggleEditMode = () => {
         setIsEditing(!isEditing);
+        if (isEditing) {
+            toast({
+                title: "You are in Editing mode"
+            })
+        } else {
+            toast({
+                title: "You have saved the Note"
+            })
+        }
     };
 
     return (
@@ -47,6 +59,7 @@ const MarkdownNotes: React.FC<MarkdownNotesProps> = ({ markdown }) => {
             ) : (
                 <ReactMarkdown children={editableMarkdown} />
             )}
+            <Toaster />
         </div>
     );
 };
