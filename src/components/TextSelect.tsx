@@ -5,32 +5,33 @@ import { Button } from './ui/button';
 const TextSelect = ({ children }: { children: React.ReactNode }) => {
   const [showButton, setShowButton] = useState(false)
   const [selectedText, setSelectedText] = useState('');
+  const [realtiveTop, setRelativeTop] = useState<number | null>(null)
+  const [realtiveLeft, setRelativeLeft] = useState<number | null>(null)
+
 
   const handleMouseUp = () => {
-
     const newText = window.getSelection()?.toString();
-    if (newText) {
-      if (newText) {
-        setSelectedText(newText);
-        setShowButton(true);
-        console.log(showButton)
-      }
-
-      try {
-        // 
-      } catch (error) {
-        console.log(error);
+    const range = window.getSelection()?.getRangeAt(0);
+    const rect = range?.getBoundingClientRect();
+    if (newText && rect) {
+      setSelectedText(newText);
+      setShowButton(true);
+      const parentRect = document.getElementById('parent')?.getBoundingClientRect();
+      if (parentRect) {
+        setRelativeTop(rect.top - parentRect.top);
+        setRelativeLeft(rect.left - parentRect.left);
       }
     }
   }
+
   const handleButtonClick = () => {
     console.log(selectedText);
     setShowButton(false);
   }
   return (
-    <div onMouseUp={handleMouseUp} className=' flex flex-col gap-4 p-2'>
+    <div id='parent' onMouseUp={handleMouseUp} className=' relative flex flex-col gap-4 p-2'>
       {showButton && (
-        <Button onClick={handleButtonClick} className='w-[150px]'>Log Selected Text</Button>
+        <Button onClick={handleButtonClick} className={`w-[150px] absolute top-[${realtiveTop}px] left-[${realtiveLeft}px]`}>Log Selected Text</Button>
       )}
       {children}
     </div>
