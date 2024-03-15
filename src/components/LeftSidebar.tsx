@@ -11,10 +11,10 @@ const LeftSidebar = () => {
     const courses = ['Course 1', 'Course 2', 'Course 3']; // Replace this with your actual list of courses
 
     return (
-        <nav className="hidden md:flex px-6 py-8 flex-col justify-between h-full max-w-[270px] sticky left-0 top-0 border-r border-[#2f2f2f]">
+        <div className="hidden md:flex px-6 py-8 flex-col justify-between h-full w-full sticky left-0 top-0 border-r border-[#2f2f2f]">
             <div className='flex flex-col gap-11'>
                 <Link to="/">
-                    <p className=" w-[170px] h-[36px] text-[40px] font-bold text-[#080808]"><span className="text-purple-500">Gen</span>Learn</p>
+                    <p className=" w-full h-[36px] text-[40px] font-bold text-[#080808]"><span className="text-purple-500">Gen</span>Learn</p>
                 </Link>
                 <Link to={`/profile/profileID`} className="flex justify-start place-items-start gap-3">
                     <img src="/public/icons/profile-placeholder.svg" alt="  profile" className="h-10 w-10 rounded-full" />
@@ -60,7 +60,7 @@ const LeftSidebar = () => {
 
             </div>
 
-        </nav>
+        </div>
     )
 }
 
