@@ -22,6 +22,10 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { NavLink } from "react-router-dom"
+import { handleSignup } from "@/lib/backend/User"
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+// import { app } from "@/lib/backend/firebase"
+
 
 
 const formSchema = z.object({
@@ -44,9 +48,31 @@ const SignupForm = () => {
             role: "student",
         },
     });
-    const onSubmit = (data: FormData) => {
-        console.log(data);
+    const onSubmit = async (data: FormData) => {
+        const { email, password } = data;
+        try {
+            const user = await handleSignup(email, password);
+            console.log(user)
+
+        } catch (error) {
+            // 
+        }
     }
+
+    const googleSignIn = async () => {
+        const provider = new GoogleAuthProvider();
+        const auth = getAuth();
+        try {
+            const result = await signInWithPopup(auth, provider);
+            // The signed-in user info.
+            const user = result.user;
+            console.log(user.uid); // Here's where you might use the UID
+        } catch (error) {
+            // Handle Errors here.
+
+            // You might want to alert the error message to the user
+        }
+    };
     return (
         <>
             <div className="flex flex-col gap-4 w-[500px]">
@@ -129,7 +155,8 @@ const SignupForm = () => {
                     </Form>
                     <div className="flex flex-col justify-center items-center mt-8">
                         <span className="text-[#eee] text-[18px] font-semibold ">Or Sign-up using</span>
-                        <div className=" flex justify-center items-center mt-4 p-4 bg-white rounded-full">
+                        <div className=" flex justify-center items-center mt-4 p-4 bg-white rounded-full cursor-pointer"
+                            onClick={googleSignIn}>
                             <img src="/public/images/google-removebg-preview.png" alt="google" className=" rounded-full" width={35} height={35} />
                         </div>
                     </div >
