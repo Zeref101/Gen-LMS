@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { NavLink } from "react-router-dom"
+import { handleSignIn } from "@/lib/backend/User"
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -29,9 +30,15 @@ const LoginForm = () => {
             password: "",
         },
     });
-    const onSubmit = (data: FormData) => {
-        console.log(data);
-    }
+    const onSubmit = async (data: FormData) => {
+        const { email, password } = data;
+        try {
+            const user = await handleSignIn(email, password);
+            console.log(user);
+        } catch (error) {
+            console.error(error);
+        }
+    };
     return (
         <>
             <div className="flex flex-col gap-4 w-[500px]">
