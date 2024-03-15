@@ -5,6 +5,7 @@ import AuthLayout from './_auth/AuthLayout';
 import SignupForm from './_auth/forms/SignupForm';
 import { Toaster } from './components/ui/toaster';
 import SigninForm from './_auth/forms/SigninForm';
+import CoursePage from './_root/pages/CoursePage';
 
 const App = () => {
   return (
@@ -19,7 +20,9 @@ const App = () => {
           {/* Private Routes */}
           <Route element={<RootLayout />}>
             <Route index element={<Home />} />
+            <Route path='/course/:courseID/' element={<CoursePage/>}/>
           </Route>
+
         </Routes>
         <Toaster />
       </main>

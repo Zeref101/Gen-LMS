@@ -1,7 +1,9 @@
 // import React from 'react'
 import LeftSidebar from "../../components/LeftSidebar";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigate = useNavigate();
   const courses = [
     {
       name: "Course 1",
@@ -148,9 +150,9 @@ export default function Home() {
   const currentDate = new Date().toJSON().slice(0, 10);
   console.log(currentDate);
   return (
-    <div className="bg-gray-100 p-10 min-h-screen w-full">
-      <div className="bg-white rounded-3xl shadow-xl overflow-hidden p-6 space-y-6">
-        <div className="flex justify-between items-center">
+    <div className="bg-gray-100 p-4 h-screen w-full">
+      <div className="bg-white flex justify-center items-center flex-col rounded-3xl h-full shadow-xl overflow-hidden p-6">
+        <div className="flex self-start justify-between items-center">
           <div className="flex space-x-4 items-center">
             <div className="bg-blue-500 text-white p-4 rounded-full">
               <i className="fas fa-book"></i>
@@ -162,31 +164,12 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="flex space-x-4 items-center">
-            <button
-              title="hi"
-              className="bg-blue-500 text-white p-2 rounded-full"
-            >
-              <i className="fas fa-plus"></i>
-            </button>
-            <button
-              title="hi"
-              className="bg-red-500 text-white p-2 rounded-full"
-            >
-              <i className="fas fa-heart"></i>
-            </button>
-            <div className="flex items-center space-x-2">
-              <p>Wesley Matthews</p>
-              <img
-                src="https://placehold.co/40x40"
-                alt="Profile picture of Wesley Matthews"
-                className="rounded-full"
-              />
-            </div>
-          </div>
         </div>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="col-span-2 bg-gray-50 p-4 rounded-2xl space-y-4">
+        <div className="flex gap-4 h-full w-full">
+          <div className="basis-1/5 h-full">
+            <LeftSidebar />
+          </div>
+          <div className="basis-3/5 h-full bg-gray-50 p-4 rounded-2xl">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold">Courses</h2>
               <div className="flex space-x-2">
@@ -204,31 +187,36 @@ export default function Home() {
                 </button>
               </div>
             </div>
-            <div className="space-y-4">
+            <div className="h-full overflow-scroll overflow-x-hidden">
               {courses.map((course, index) => (
                 <div key={index} className={`flex items-center p-4 rounded-lg`}>
                   <div
                     style={{
                       background: colors[index],
                     }}
-                    className="flex-grow"
+                    className="w-full h-full rounded-3xl flex items-center space-x-4 p-4 object-contain"
                   >
+                    <img className="basis-1/6 h-full" src={course.icon} alt="" />
+                    <div className="content basis-4/6">
                     <h3 className="text-white font-semibold">{course.name}</h3>
                     <p className="text-white text-opacity-80 text-sm">
                       {course.description}
                     </p>
-                  </div>
-                  <button className="flex-shrink-0 bg-blue-500 h-full p-4 rounded-3xl text-white ml-4">
-                    Enroll
+                    </div>
+                    <button onClick={()=>{
+                      navigate(`/course/${index}`)
+                    }} className="justify-center self-end basis-1/6 flex items-center bg-blue-500 h-full p-4 drop-shadow-buttons rounded-3xl text-white">
+                    View
                   </button>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
-          <div className="space-y-4">
-            <div className="bg-gray-50 p-4 rounded-2xl space-y-4">
+          <div className="flex basis-1/5 flex-col h-full overflow-hidden">
+            <div className="bg-gray-50 p-4 rounded-2xl h-1/2 basis-1/2">
               <h2 className="text-xl font-semibold">My learning</h2>
-              <div className="space-y-2">
+              <div className=" h-full overflow-scroll">
                 {progress.map((course, index) => (
                   <div
                     key={index}
@@ -239,18 +227,19 @@ export default function Home() {
                     </div>
                     <div className="w-full h-4 rounded-3xl bg-slate-300">
                       <div
-                        style={{ width: `${course.progress * 100}%` }}
-                        className={`h-full rounded-3xl bg-slate-700`}
+                        style={{ width: `${course.progress * 100}%`,
+                      background:`${colors[index%colors.length]}` }}
+                        className={`h-full rounded-3xl`}
                       ></div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="bg-gray-50 p-4 rounded-2xl">
+            <div className="bg-gray-50 p-4 rounded-2xl overflow-hidden basis-1/2">
               <h2 className="text-xl font-semibold">Timeline</h2>
               <div className="flex justify-between items-center mt-4"></div>
-              <div className="mt-4">
+              <div className="mt-4 overflow-scroll h-full">
                 {timelines.map((event, index) => {
                   return (
                     <div key={index} className="flex justify-center items-center">

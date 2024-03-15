@@ -12,7 +12,6 @@ const AuthLayout = () => {
             navigate('/');
         }
     }, [isAuthenticated, navigate, isLoading]);
-
     return (
         <>
             {isAuthenticated ? (
