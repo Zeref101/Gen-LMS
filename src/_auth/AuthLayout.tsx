@@ -1,8 +1,18 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { AuthContextWrap } from '@/context/AuthContext';
+import { useContext, useEffect } from 'react';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 
+// AuthLayout
 const AuthLayout = () => {
+    const { isAuthenticated, isLoading } = useContext(AuthContextWrap);
+    const navigate = useNavigate();
 
-    const isAuthenticated = false;
+    useEffect(() => {
+        if (!isLoading && isAuthenticated) {
+            navigate('/');
+        }
+    }, [isAuthenticated, navigate, isLoading]);
+
     return (
         <>
             {isAuthenticated ? (
