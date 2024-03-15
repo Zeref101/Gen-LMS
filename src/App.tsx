@@ -9,7 +9,7 @@ import SigninForm from './_auth/forms/SigninForm';
 const App = () => {
   return (
     <Router>
-      <main className=" h-screen bg-dark-1">
+      <main className=" h-screen bg-dark-1 bg-[#eee]">
         <Routes>
           {/* Public Routes */}
           <Route element={<AuthLayout />}>
