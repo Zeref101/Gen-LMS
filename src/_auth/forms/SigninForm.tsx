@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { NavLink } from "react-router-dom"
 import { handleSignIn } from "@/lib/backend/User"
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth"
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -37,6 +38,28 @@ const LoginForm = () => {
             console.log(user);
         } catch (error) {
             console.error(error);
+        }
+    };
+    const signInWithGoogle = async () => {
+        const auth = getAuth();
+        try {
+            const provider = new GoogleAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+            // This gives you a Google Access Token. You can use it to access Google APIs.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            if (credential) {
+                const token = credential.accessToken;
+
+                // rest of your code...
+            } else {
+                console.error("No credential found in result");
+            }
+            // The signed-in user info.
+            const user = result.user;
+            localStorage.setItem('user', JSON.stringify(user));            // You can perform further actions with the user object, such as redirecting to a dashboard
+        } catch (error) {
+            console.error("Error during Google sign-in:", error.message);
+            // Handle errors here, such as displaying a notification to the user
         }
     };
     return (
@@ -80,7 +103,8 @@ const LoginForm = () => {
                     </Form>
                     <div className="flex flex-col justify-center items-center mt-8">
                         <span className="text-[#eee] text-[18px] font-semibold ">Or Sign-in using</span>
-                        <div className=" flex justify-center items-center mt-4 p-4 bg-white rounded-full">
+                        <div className=" flex justify-center items-center mt-4 p-4 bg-white rounded-full cursor-pointer"
+                            onClick={signInWithGoogle}>
                             <img src="/public/images/google-removebg-preview.png" alt="google" className=" rounded-full" width={35} height={35} />
                         </div>
                     </div >
