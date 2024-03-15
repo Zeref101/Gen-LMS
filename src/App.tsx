@@ -6,6 +6,8 @@ import SignupForm from './_auth/forms/SignupForm';
 import { Toaster } from './components/ui/toaster';
 import SigninForm from './_auth/forms/SigninForm';
 import CoursePage from './_root/pages/CoursePage';
+import NotesPage from './_root/pages/NotesPage';
+import Note from './_root/pages/Note';
 
 const App = () => {
   return (
@@ -20,7 +22,10 @@ const App = () => {
           {/* Private Routes */}
           <Route element={<RootLayout />}>
             <Route index element={<Home />} />
-            <Route path='/course/:courseID/' element={<CoursePage/>}/>
+            <Route path='/course/:courseID/' element={<CoursePage />} />
+            <Route path='/notes' element={<Note />} />
+            <Route path="/notes/:noteID" element={<NotesPage />} />
+
           </Route>
 
         </Routes>

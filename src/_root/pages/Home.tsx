@@ -171,19 +171,23 @@ export default function Home() {
           </div>
           <div className="basis-3/5 h-full bg-gray-50 p-4 rounded-2xl">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">Courses</h2>
-              <div className="flex space-x-2">
-                <button
-                  title="hi"
-                  className="bg-blue-500 h-full w-full text-white p-2 rounded-full"
-                >
-                  <i className="fas fa-ellipsis-h"></i>
-                </button>
+              <div className="flex space-x-4 items-center">
+                <div className="bg-blue-500 text-white p-4 rounded-full">
+                  <i className="fas fa-book"></i>
+                </div>
+                <div>
+                  <h1 className="text-2xl font-semibold">Course Activity</h1>
+                  <p className="text-gray-400">
+                    {new Date().toJSON().slice(0, 10)}
+                  </p>
+                </div>
+              </div>
+              <div className="flex space-x-4 items-center">
                 <button
                   title="hi"
                   className="bg-blue-500 text-white p-2 rounded-full"
                 >
-                  <i className="fas fa-sync"></i>
+                  <i className="fas fa-plus"></i>
                 </button>
               </div>
             </div>
@@ -198,16 +202,16 @@ export default function Home() {
                   >
                     <img className="basis-1/6 h-full" src={course.icon} alt="" />
                     <div className="content basis-4/6">
-                    <h3 className="text-white font-semibold">{course.name}</h3>
-                    <p className="text-white text-opacity-80 text-sm">
-                      {course.description}
-                    </p>
+                      <h3 className="text-white font-semibold">{course.name}</h3>
+                      <p className="text-white text-opacity-80 text-sm">
+                        {course.description}
+                      </p>
                     </div>
-                    <button onClick={()=>{
+                    <button onClick={() => {
                       navigate(`/course/${index}`)
                     }} className="justify-center self-end basis-1/6 flex items-center bg-blue-500 h-full p-4 drop-shadow-buttons rounded-3xl text-white">
-                    View
-                  </button>
+                      View
+                    </button>
                   </div>
                 </div>
               ))}
@@ -227,8 +231,10 @@ export default function Home() {
                     </div>
                     <div className="w-full h-4 rounded-3xl bg-slate-300">
                       <div
-                        style={{ width: `${course.progress * 100}%`,
-                      background:`${colors[index%colors.length]}` }}
+                        style={{
+                          width: `${course.progress * 100}%`,
+                          background: `${colors[index % colors.length]}`
+                        }}
                         className={`h-full rounded-3xl`}
                       ></div>
                     </div>
@@ -251,14 +257,63 @@ export default function Home() {
                         <p className=" whitespace-nowrap text-slate-600">{event.date}</p>
                         <p className=" whitespace-nowrap text-slate-600">{event.time}</p>
                       </div>
+                      <button className="flex-shrink-0 bg-blue-500 h-full p-4 rounded-3xl text-white ml-4">
+                        Enroll
+                      </button>
                     </div>
-                  );
+                  )
                 })}
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div className="bg-gray-50 p-4 rounded-2xl space-y-4">
+                <h2 className="text-xl font-semibold">My learning</h2>
+                <div className="space-y-2">
+                  {progress.map((course, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col justify-between items-center"
+                    >
+                      <div className="flex-grow">
+                        <h1 className="font-semibold">{course.course}</h1>
+                      </div>
+                      <div className="w-full h-4 rounded-3xl bg-slate-300">
+                        <div
+                          style={{ width: `${course.progress * 100}%` }}
+                          className={`h-full rounded-3xl bg-slate-700`}
+                        ></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-2xl">
+                <h2 className="text-xl font-semibold">Timeline</h2>
+                <div className="flex justify-between items-center mt-4"></div>
+                <div className="mt-4">
+                  {timelines.map((event, index) => {
+                    return (
+                      <div key={index} className="flex justify-center items-center">
+                        <div className="desc">
+                          <h3>{event.title}</h3>
+                          <p className="text-slate-400">{event.description}</p>
+                        </div>
+                        <div className="time">
+                          <p className=" whitespace-nowrap text-slate-600">{event.date}</p>
+                          <p className=" whitespace-nowrap text-slate-600">{event.time}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
     </div>
+    </>
+
   );
 }
