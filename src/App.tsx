@@ -1,68 +1,30 @@
-import MarkdownNotes from "./components/MarkdownNotes";
-import TextSelect from "./components/TextSelect";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import RootLayout from './_root/RootLayout';
+import Home from './_root/pages/Home';
+import AuthLayout from './_auth/AuthLayout';
+import SignupForm from './_auth/forms/SignupForm';
+import { Toaster } from './components/ui/toaster';
+import SigninForm from './_auth/forms/SigninForm';
 
 const App = () => {
-  const markdown = `
-  # Eldafriend-backend
-
-- Backend for Eldafriend app, A pal for the elder community! Track your medication, along with reminders and many showstopper features that ensure completely homely care.
-
-End-Points:
-
-- [User Authentication endpoints](#auth)
-- [Medicine endpoints](#meds)
-- [Community endpoints](#community)
-- [Expense endpoints](#expense)
-- [User functionalities](#user)
-
-To install dependencies:
-
-\`\`\`bash
-bun install
-\`\`\`
-
-To run:
-
-\`\`\`bash
-bun run dev
-\`\`\`
-
-### <a id="auth" ></a>User Authentication
-
-### GET /api/auth
-
-**Returns a greeting message.**
-
-### POST /api/auth/sign-up/getOtp
-
-**Creates a new user and sends an OTP to their email.**
-
-#### Headers:
-
-- Content-Type: application/json
-
-#### Request Body:
-
-\`\`\`json
-{
-  "fullname": "John Doe",
-  "email": "johndoe@example.com",
-  "phone": "+1234567890",
-  "password": "password123"
-}
-\`\`\`
-
-
-
-  `;
-
   return (
-    <div>
-      <TextSelect>
-        <MarkdownNotes markdown={markdown.toString()} />
-      </TextSelect>
-    </div>
-  )
-}
+    <Router>
+      <main className=" h-screen bg-dark-1">
+        <Routes>
+          {/* Public Routes */}
+          <Route element={<AuthLayout />}>
+            <Route path="/sign-in" element={<SigninForm />} />
+            <Route path="/sign-up" element={<SignupForm />} />
+          </Route>
+          {/* Private Routes */}
+          <Route element={<RootLayout />}>
+            <Route index element={<Home />} />
+          </Route>
+        </Routes>
+        <Toaster />
+      </main>
+    </Router>
+  );
+};
 
-export default App
+export default App;
