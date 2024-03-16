@@ -13,6 +13,7 @@ export interface Quiz {
   courseId: string;
   end_date: Date; // Depending on your data structure, this might need to adjust
   // Add other quiz properties here
+  name: string;
 }
 export interface Submitted_Quiz {
   id: string;
@@ -21,6 +22,7 @@ export interface Submitted_Quiz {
   // Add other quiz properties here
   marks_scored: number;
   saved_answers: string[];
+  name: string;
 }
 export const handleSignup = async (email: string, password: string) => {
   const auth = getAuth(app);
@@ -125,3 +127,14 @@ export const fetchStudentquiz = async (courseID: string): Promise<[Quiz[], Submi
 
   return [fetchedQuizzes, submitfetchedQuizzes];
 };
+
+export const fetchquiz = async (quizID: string) => {
+  const docRef = doc(db, "quiz", quizID);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    console.log("No such document!");
+    return [];
+  }
+}
