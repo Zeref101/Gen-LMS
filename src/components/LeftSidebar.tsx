@@ -5,13 +5,15 @@ import { sidebarLinks } from "@/constants";
 import { useState } from "react";
 import { Button } from "./ui/button";
 
+
 const LeftSidebar = () => {
     const { pathname } = useLocation();
     const [showCourses, setShowCourses] = useState(false);
     const courses = ['Course 1', 'Course 2', 'Course 3']; // Replace this with your actual list of courses
+    const onNotesPage = pathname.includes("/notes");
 
     return (
-        <div className="hidden md:flex px-6 py-8 flex-col justify-between h-full w-full sticky left-0 top-0 border-r border-[#2f2f2f]">
+        <div className="hidden md:flex px-6 py-8 flex-col justify-between bg-gray-50 rounded-lg h-full w-full sticky left-0 top-0 border border-[#2f2f2f]">
             <div className='flex flex-col gap-11'>
                 <Link to="/">
                     <p className=" w-full h-[36px] text-[40px] font-bold text-[#080808]"><span className="text-purple-500">Gen</span>Learn</p>
@@ -34,6 +36,18 @@ const LeftSidebar = () => {
                             </li>
                         )
                     })}
+                    {onNotesPage && (
+                        <>
+
+                            <li>
+                                <NavLink to="/create-notes" className="flex gap-4 text-[#080808] items-center hover:bg-purple-500  rounded-lg p-4 group-hover:invert bg-[#a855f71f] group-hover:brightness-0 group-hover:transition">
+                                    {/* Add appropriate icon or content for "Create Notes" */}
+                                    <img src="/public/icons/png-transparent-notebook-note-taking-notebook-miscellaneous-infographic-angle-thumbnail-removebg-preview.png" alt="Create Notes" width={24} height={24} />
+                                    Create Notes
+                                </NavLink>
+                            </li>
+                        </>
+                    )}
                     <div>
                         <Button onClick={() => setShowCourses(!showCourses)} className={
                             `rounded-lg text-[16px] font-medium leading-[140%] bg-[#a855f71f] text-[#080808] hover:bg-purple-500  hover:text-white transition flex  justify-start items-center w-full py-8 group ${showCourses ? "bg-purple-500 text-white" : ""}`
