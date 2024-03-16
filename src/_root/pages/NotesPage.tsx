@@ -40,9 +40,9 @@ const NotesPage = () => {
     console.log(noteData)
 
     return (
-        <ResizablePanelGroup direction="horizontal">
-            <ResizablePanel>
-                <div className=' p-4 bg-slate-300 m-4 rounded-lg '>
+        <ResizablePanelGroup direction="horizontal" className='h-screen overflow-hidden'>
+            <ResizablePanel defaultSize={20} className='overflow-auto'>
+                <div className=' p-4 bg-[#a855f71f] m-4 rounded-lg '>
                     <h1>{noteID}</h1>
                     {noteData && noteData.map((note: any) => (
                         <div key={note.name}>
@@ -59,8 +59,8 @@ const NotesPage = () => {
                 </div >
             </ResizablePanel >
             <ResizableHandle className=' bg-black cursor-col-resize border-l-4 border-r-4 border-black' />
-            <ResizablePanel>
-                <div className='p-4 bg-slate-300 m-4 rounded-lg'>
+            <ResizablePanel defaultSize={80} className='overflow-auto'>
+                <div className='p-4 bg-[#a855f71f] m-4 rounded-lg'>
 
                     {noteData && noteData.map((note: any, noteIndex: number) => (
                         <div key={noteIndex}>
