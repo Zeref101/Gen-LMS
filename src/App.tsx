@@ -18,32 +18,32 @@ import Assignment from './_root/pages/Assignment';
 const App = () => {
   const isTeacher = false;
   return (
-    <Router>
-      <main className=" min-h-screen bg-dark-1 bg-[#eee]">
-        <Routes>
-          {/* Public Routes */}
-          <Route element={<AuthLayout />}>
-            <Route path="/sign-in" element={<SigninForm />} />
-            <Route path="/sign-up" element={<SignupForm />} />
-          </Route>
-          {/* Private Routes */}
-          <Route element={<RootLayout />}>
-            <Route index element={<Home />} />
-            <Route path='/course/:courseID/' element={<CoursePage />} />
-            <Route path='/notes' element={<Note />} />
-            <Route path="/notes/:noteID" element={<NotesPage />} />
-            <Route path="/create-notes" element={<CreateNotes />} />
-            <Route path='/course/:courseID/quizzes' element={(!isTeacher) ? <Quizzes /> : <TeacherQuiz />} />
-            <Route path='/course/:courseID/quizzes/:quizID' element={<MCQ />} />
-            <Route path='/course/:courseID/quizzes/createQuiz' element={<CreateQuiz />} />
 
-            <Route path='/course/:courseID/assignment' element={<Assignment />} />
-          </Route>
+    <main className=" min-h-screen bg-dark-1 bg-[#eee]">
+      <Routes>
+        {/* Public Routes */}
+        <Route element={<AuthLayout />}>
+          <Route path="/sign-in" element={<SigninForm />} />
+          <Route path="/sign-up" element={<SignupForm />} />
+        </Route>
+        {/* Private Routes */}
+        <Route element={<RootLayout />}>
+          <Route index element={<Home />} />
+          <Route path='/course/:courseID/' element={<CoursePage />} />
+          <Route path='/notes' element={<Note />} />
+          <Route path="/notes/:noteID" element={<NotesPage />} />
+          <Route path="/create-notes" element={<CreateNotes />} />
+          <Route path='/course/:courseID/quizzes' element={(!isTeacher) ? <Quizzes /> : <TeacherQuiz />} />
+          <Route path='/course/:courseID/quizzes/:quizID' element={<MCQ />} />
+          <Route path='/course/:courseID/quizzes/createQuiz' element={<CreateQuiz />} />
 
-        </Routes>
-        <Toaster />
-      </main>
-    </Router>
+          <Route path='/course/:courseID/assignment' element={<Assignment />} />
+        </Route>
+
+      </Routes>
+      <Toaster />
+    </main>
+
   );
 };
 
