@@ -15,6 +15,8 @@ import { Input } from "@/components/ui/input"
 import { NavLink } from "react-router-dom"
 import { handleSignIn } from "@/lib/backend/User"
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth"
+import { AuthContextWrap } from "@/context/AuthContext"
+import { useContext } from "react"
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -24,6 +26,8 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const LoginForm = () => {
+    const { setIsAuthenticated } = useContext(AuthContextWrap);
+
     const form = useForm<FormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -35,7 +39,9 @@ const LoginForm = () => {
         const { email, password } = data;
         try {
             const user = await handleSignIn(email, password);
-            console.log(user);
+            if (user) {
+                setIsAuthenticated(true);
+            }
         } catch (error) {
             console.error(error);
         }
@@ -45,18 +51,19 @@ const LoginForm = () => {
         try {
             const provider = new GoogleAuthProvider();
             const result = await signInWithPopup(auth, provider);
-            // This gives you a Google Access Token. You can use it to access Google APIs.
             const credential = GoogleAuthProvider.credentialFromResult(result);
             if (credential) {
                 const token = credential.accessToken;
                 console.log(token)
-                // rest of your code...
             } else {
                 console.error("No credential found in result");
             }
             // The signed-in user info.
             const user = result.user;
-            localStorage.setItem('user', JSON.stringify(user));            // You can perform further actions with the user object, such as redirecting to a dashboard
+            localStorage.setItem('user', JSON.stringify(user));
+            if (user) {
+                setIsAuthenticated(true);
+            }
         } catch (error) {
             console.error("Error during Google sign-in");
             // Handle errors here, such as displaying a notification to the user
@@ -71,7 +78,7 @@ const LoginForm = () => {
                             <div className="flex flex-col gap-2 justify-center items-center">
                                 <p className=" w-[170px] h-[36px] text-[40px] font-bold text-white"><span className="text-purple-500">Gen</span>Learn</p>
                                 <h2 className="text-[14px] text-white font-bold leading-[140%] tracking-tighter md:text-[25px] md:font-bold md:leading-[140%] md:tracking-tighter pt-2 sm:pt-4">
-                                    Log in to your account
+                                    Log in to get started
                                 </h2>
                             </div>
                             <FormField
@@ -109,7 +116,7 @@ const LoginForm = () => {
                         </div>
                     </div >
                 </div>
-                <p className=" font-normal text-[18px] text-[#eee] text-center mt-2">
+                <p className=" font-semibold text-[18px] text-[#080808] text-center mt-2">
                     Don't have an account?
                     <NavLink
                         to="/sign-up"

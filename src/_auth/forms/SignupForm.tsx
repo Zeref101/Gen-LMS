@@ -24,6 +24,8 @@ import {
 import { NavLink } from "react-router-dom"
 import { handleSignup } from "@/lib/backend/User"
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { useContext } from "react"
+import { AuthContextWrap } from "@/context/AuthContext"
 // import { app } from "@/lib/backend/firebase"
 
 
@@ -48,11 +50,16 @@ const SignupForm = () => {
             role: "student",
         },
     });
+    const { setIsAuthenticated } = useContext(AuthContextWrap);
+
     const onSubmit = async (data: FormData) => {
         const { email, password } = data;
         try {
             const user = await handleSignup(email, password);
-            console.log(user)
+            localStorage.setItem("user", JSON.stringify(user));
+            if (user) {
+                setIsAuthenticated(true);
+            }
 
         } catch (error) {
             // 
@@ -66,7 +73,10 @@ const SignupForm = () => {
             const result = await signInWithPopup(auth, provider);
             // The signed-in user info.
             const user = result.user;
-            console.log(user.uid); // Here's where you might use the UID
+            localStorage.setItem("user", JSON.stringify(user));
+            if (user) {
+                setIsAuthenticated(true);
+            }
         } catch (error) {
             // Handle Errors here.
 
@@ -162,7 +172,7 @@ const SignupForm = () => {
                     </div >
 
                 </div>
-                <p className=" font-normal text-[18px] text-[#eee] text-center mt-2">
+                <p className=" font-semibold text-[18px] text-[#080808] text-center mt-2">
                     Already have an account?
                     <NavLink
                         to="/sign-in"
