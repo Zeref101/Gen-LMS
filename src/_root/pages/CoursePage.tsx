@@ -1,33 +1,33 @@
 // import React from 'react'
 import { useParams } from "react-router-dom";
-import { Progress } from "@/components/ui/progress";
+// import { Progress } from "@/components/ui/progress";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
-import "react-vertical-timeline-component/style.min.css";
-import { useState } from "react";
+import 'react-vertical-timeline-component/style.min.css';
+// import { useState } from "react";
 
 export default function CoursePage() {
-  const [progress, setProgress] = useState(0);
+  // const [progress, setProgress] = useState(0);
+  { `/show_upcoming_quiz` }
   const { courseID } = useParams();
   return (
     <div className="flex h-screen w-full">
       <div className="h-full w-full flex flex-col">
         <div className="intro h-2/5 bg-blue-400"></div>
         <div className="cont relative h-3/5 overflow-hidden flex w-full">
-          <div className="syllabus flex flex-col basis-1/2 overflow-scroll">
-            <div>Syllabus</div>
+          <div className="syllabus flex flex-col basis-1/2 overflow-scroll p-2">
+            <div className="text-purple-700 font-bold text-[25px]">Syllabus</div>
             <div className="silly overflow-hidden flex h-full w-full">
               <div className="-rotate-90 flex h-full w-full">
-                <Progress value={progress} className="w-[80%]" />
                 <div className="content h-full"></div>
               </div>
               <div></div>
             </div>
           </div>
-          <div className="timeline basis-1/2 overflow-scroll">
-            <div>TimeLine</div>
+          <div className="timeline basis-1/2 overflow-scroll p-2">
+            <div className="text-purple-700 font-bold text-[25px]">TimeLine</div>
             <VerticalTimeline>
               <VerticalTimelineElement
                 className="vertical-timeline-element--work"
