@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import MarkdownNotes from "@/components/MarkdownNotes";
 import { InfinitySpin } from 'react-loader-spinner';
+// import TextSelect from "@/components/TextSelect";
 
 const CreateNotes = () => {
     const [syllabus, setSyllabus] = useState("");
