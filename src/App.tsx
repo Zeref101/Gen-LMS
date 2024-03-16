@@ -11,8 +11,11 @@ import Note from './_root/pages/Note';
 import CreateNotes from './_root/pages/CreateNotes';
 import Quizzes from './_root/pages/Quiz';
 import MCQ from './_root/pages/MCQ';
+import TeacherQuiz from './_root/pages/TeacherQuiz';
+import CreateQuiz from './_root/pages/CreateQuiz';
 
 const App = () => {
+  const isTeacher = false;
   return (
     <Router>
       <main className=" min-h-screen bg-dark-1 bg-[#eee]">
@@ -29,8 +32,10 @@ const App = () => {
             <Route path='/notes' element={<Note />} />
             <Route path="/notes/:noteID" element={<NotesPage />} />
             <Route path="/create-notes" element={<CreateNotes />} />
-            <Route path='/course/:courseID/quizzes' element={<Quizzes />} />
+            <Route path='/course/:courseID/quizzes' element={(!isTeacher)?<Quizzes />:<TeacherQuiz/>} />
             <Route path='/course/:courseID/quizzes/:quizID' element={<MCQ />} />
+            <Route path='/course/:courseID/quizzes/createQuiz' element={<CreateQuiz />} />
+
           </Route>
 
         </Routes>

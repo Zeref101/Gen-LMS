@@ -53,7 +53,12 @@ const MCQ = () => {
     } else {
       setTimeout(() => {
         setActiveQuestion(0);
-        console.log(answers);
+        console.log({
+          quiz_id: quizID,
+          student_id: "wfPc1lDadJcMcID4Nyyz",
+          saved_answers: answers,
+          name: "Python",
+        });
         axios
           .post("http://192.168.47.237:8000/save_student_answers/", {
             quiz_id: quizID,
