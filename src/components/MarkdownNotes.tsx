@@ -34,9 +34,9 @@ const MarkdownNotes: React.FC<MarkdownNotesProps> = ({ markdown }) => {
     };
 
     return (
-        <div className="flex flex-col justify-center items-start bg-[#08082a] w-1/2 border-2 border-[#7b7bf3] rounded-lg p-4 text-white text-[20px]">
+        <div className="flex flex-col justify-center items-start bg-slate-300 w-full rounded-lg p-4 text-black text-[20px]">
 
-            <div className='flex gap-8'>
+            {/* <div className='flex gap-8'>
 
                 <Button
                     onClick={toggleEditMode}
@@ -48,7 +48,7 @@ const MarkdownNotes: React.FC<MarkdownNotesProps> = ({ markdown }) => {
                     className='border-green-900 bg-green-500 mb-4 w-[100px] hover:bg-green-700'
                 >Save
                 </Button>
-            </div>
+            </div> */}
 
             {isEditing ? (
                 <Textarea
