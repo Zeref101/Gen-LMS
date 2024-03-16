@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useState } from 'react';
 import MarkdownNotes from "@/components/MarkdownNotes";
 import { InfinitySpin } from 'react-loader-spinner';
-import { render } from "react-dom";
 
 const CreateNotes = () => {
     const [syllabus, setSyllabus] = useState("");
@@ -43,7 +42,7 @@ const CreateNotes = () => {
 
     return (
         <>
-            <div className=" h-screen w-full">
+            <div className=" h-screen w-full flex justify-center items-center">
                 {isLoading && (
                     <InfinitySpin
                         width="200"
