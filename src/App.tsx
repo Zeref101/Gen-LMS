@@ -13,6 +13,7 @@ import Quizzes from './_root/pages/Quiz';
 import MCQ from './_root/pages/MCQ';
 import TeacherQuiz from './_root/pages/TeacherQuiz';
 import CreateQuiz from './_root/pages/CreateQuiz';
+import Assignment from './_root/pages/Assignment';
 
 const App = () => {
   const isTeacher = false;
@@ -32,10 +33,11 @@ const App = () => {
             <Route path='/notes' element={<Note />} />
             <Route path="/notes/:noteID" element={<NotesPage />} />
             <Route path="/create-notes" element={<CreateNotes />} />
-            <Route path='/course/:courseID/quizzes' element={(!isTeacher)?<Quizzes />:<TeacherQuiz/>} />
+            <Route path='/course/:courseID/quizzes' element={(!isTeacher) ? <Quizzes /> : <TeacherQuiz />} />
             <Route path='/course/:courseID/quizzes/:quizID' element={<MCQ />} />
             <Route path='/course/:courseID/quizzes/createQuiz' element={<CreateQuiz />} />
 
+            <Route path='/course/:courseID/assignment' element={<Assignment />} />
           </Route>
 
         </Routes>
