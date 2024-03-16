@@ -11,18 +11,22 @@ import MarkdownNotes from '@/components/MarkdownNotes';
 
 
 const NotesPage = () => {
-    const userId = "default_userid";
+    const userId = "cache";
     const { noteID } = useParams();
     const [noteData, setNoteData] = useState<DocumentData | null>(null);
+    const [selectedSubtopic, setSelectedSubtopic] = useState(null);
 
     useEffect(() => {
         const fetchNote = async () => {
             try {
                 const fetchedNotes = await fetchUserNotes(userId);
                 if (noteID) {
-
                     if (fetchedNotes && noteID in fetchedNotes) {
                         setNoteData(fetchedNotes[noteID]);
+                        // Set the first subtopic of the first note as the default selected subtopic
+                        if (fetchedNotes[noteID].length > 0 && fetchedNotes[noteID][0].subtopics.length > 0) {
+                            setSelectedSubtopic(fetchedNotes[noteID][0].subtopics[0]);
+                        }
                     } else {
                         console.log('No note with the specified ID was found');
                     }
@@ -48,31 +52,30 @@ const NotesPage = () => {
                         <div key={note.name}>
                             <h4 className=' font-semibold'>{note.name}</h4>
                             <div className='flex flex-col gap-2'>
-
                                 {note.subtopics.map((subtopic: any) => (
-                                    <a key={subtopic.name} href={`#${subtopic.name}`}>- {subtopic.name}</a>
+                                    <a
+                                        key={subtopic.name}
+                                        href={`#${subtopic.name}`}
+                                        onClick={() => setSelectedSubtopic(subtopic)}
+                                    >
+                                        - {subtopic.name}
+                                    </a>
                                 ))}
                             </div>
                         </div>
-                    ))
-                    }
+                    ))}
                 </div >
             </ResizablePanel >
             <ResizableHandle className=' bg-black cursor-col-resize border-l-4 border-r-4 border-black' />
             <ResizablePanel defaultSize={80} className='overflow-auto'>
                 <div className='p-4 bg-[#a855f71f] m-4 rounded-lg'>
 
-                    {noteData && noteData.map((note: any, noteIndex: number) => (
-                        <div key={noteIndex}>
-                            <h2>{note.name}</h2>
-                            {note.subtopics && note.subtopics.map((subtopic: any, subtopicIndex: number) => (
-                                <div key={subtopicIndex}>
-                                    <h3> <a href={subtopic.name}>{subtopic.name}</a></h3>
-                                    <MarkdownNotes markdown={subtopic.content} />
-                                </div>
-                            ))}
+                    {selectedSubtopic && (
+                        <div>
+                            <h2>{selectedSubtopic.name}</h2>
+                            <MarkdownNotes key={selectedSubtopic.name} markdown={selectedSubtopic.content} />
                         </div>
-                    ))}
+                    )}
                 </div>
             </ResizablePanel>
         </ResizablePanelGroup >
