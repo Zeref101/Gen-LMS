@@ -9,14 +9,13 @@ import CoursePage from './_root/pages/CoursePage';
 import NotesPage from './_root/pages/NotesPage';
 import Note from './_root/pages/Note';
 import CreateNotes from './_root/pages/CreateNotes';
-// import Quiz from './_root/pages/Quiz';
 import Quizzes from './_root/pages/Quiz';
 import MCQ from './_root/pages/MCQ';
 
 const App = () => {
   return (
     <Router>
-      <main className=" h-screen bg-dark-1 bg-[#eee]">
+      <main className=" min-h-screen bg-dark-1 bg-[#eee]">
         <Routes>
           {/* Public Routes */}
           <Route element={<AuthLayout />}>
@@ -24,13 +23,12 @@ const App = () => {
             <Route path="/sign-up" element={<SignupForm />} />
           </Route>
           {/* Private Routes */}
-          <Route element={<RootLayout />}>  
+          <Route element={<RootLayout />}>
             <Route index element={<Home />} />
             <Route path='/course/:courseID/' element={<CoursePage />} />
             <Route path='/notes' element={<Note />} />
             <Route path="/notes/:noteID" element={<NotesPage />} />
             <Route path="/create-notes" element={<CreateNotes />} />
-
             <Route path='/course/:courseID/quizzes' element={<Quizzes />} />
             <Route path='/course/:courseID/quizzes/:quizID' element={<MCQ />} />
           </Route>
