@@ -1,10 +1,28 @@
 import React, { useEffect, useState } from "react";
 // import Mcq from "@/components/Mcq";
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
+import { useNavigate } from "react-router-dom";
 import LeftSidebar from "@/components/LeftSidebar";
 import { useParams } from "react-router-dom";
 import { fetchStudentquiz } from "@/lib/backend/User";
@@ -16,6 +34,7 @@ export default function Quizzes() {
   const [attemptedQuizzes, setAttemptedQuizzes] = useState<Submitted_Quiz[]>(
     []
   );
+  const navigate = useNavigate();
   // console.log(courseID);
   useEffect(() => {
     async function fetchquiz() {
@@ -27,12 +46,12 @@ export default function Quizzes() {
         console.log("hehe", all, submitted);
         // Assuming `fetchStudentquiz` is modified to return [Quiz[], Submitted_Quiz[]]
         const attemptedQuizzesSet = new Set(submitted.map((sq) => sq.quiz_id));
-        const unattemptedQuizzes = all.filter((quiz) =>
-          !attemptedQuizzesSet.has(quiz.id)
+        const unattemptedQuizzes = all.filter(
+          (quiz) => !attemptedQuizzesSet.has(quiz.id)
         );
         console.log("unattempted", unattemptedQuizzes);
         setunAttemptedQuizzes(unattemptedQuizzes); // Assuming you wanted unattempted here based on your filter logic
-        console.log(submitted, "submitted")
+        console.log(submitted, "submitted");
         if (submitted.length > 0) {
           setAttemptedQuizzes(submitted);
         }
@@ -88,21 +107,24 @@ export default function Quizzes() {
               {/* Widget */}
               <div className="bg-white p-4 rounded-lg shadow">
                 {attemptedQuizzes.length > 0 ? (
-                  <div className="flex flex-col w-full h-full overflow-scroll overflow-x-hidden" >
+                  <div className="flex flex-col w-full h-full overflow-scroll overflow-x-hidden">
                     <h1>Attempted Quizzes</h1>
                     {attemptedQuizzes.map((quiz, index) => {
-                      return <div key={index} className={`flex items-center rounded-lg`}>
-                      <div
-                        className="w-full bg-green-500 h-full rounded-3xl flex justify-between items-center p-2 "
-                      >
-                          <h3 className="text-white font-semibold">
-                            {quiz.id}
-                          </h3>
-                          <p className="text-black bg-white p-4 rounded-2xl">
-                            {quiz.marks_scored}
-                          </p>
-                      </div>
-                    </div>
+                      return (
+                        <div
+                          key={index}
+                          className={`flex items-center rounded-lg`}
+                        >
+                          <div className="w-full bg-green-500 h-full rounded-3xl flex justify-between items-center p-2 ">
+                            <h3 className="text-white font-semibold">
+                              {quiz.id}
+                            </h3>
+                            <p className="text-black bg-white p-4 rounded-2xl">
+                              {quiz.marks_scored}
+                            </p>
+                          </div>
+                        </div>
+                      );
                     })}
                   </div>
                 ) : (
@@ -148,21 +170,30 @@ export default function Quizzes() {
               {/* Widget */}
               <div className="bg-white p-4 rounded-lg shadow">
                 {unattemptedQuizzes.length > 0 ? (
-                  <div className="flex flex-col w-full h-full overflow-scroll overflow-x-hidden" >
+                  <div className="flex flex-col w-full h-full overflow-scroll overflow-x-hidden">
                     <h1>Unattempted Quizzes</h1>
                     {unattemptedQuizzes.map((quiz, index) => {
-                      return <div key={index} className={`flex items-center rounded-lg`}>
-                      <div
-                        className="w-full bg-red-400 h-full rounded-3xl flex justify-between items-center p-2 "
-                      >
-                          <h3 className="text-white font-semibold">
-                            {quiz.id}
-                          </h3>
-                          <p className="text-black bg-white p-4 rounded-2xl">
-                          {quiz.end_date.toString()}
-                          </p>
-                      </div>
-                    </div>
+                      return (
+                        <div
+                          key={index}
+                          className={`flex items-center rounded-lg`}
+                        >
+                          <div className="w-full bg-red-400 h-full rounded-3xl flex flex-col gap-4 justify-between items-center p-2 ">
+                            <div className="flex gap-4">
+                              <h3 className="text-white font-semibold">
+                                {quiz.id}
+                              </h3>
+                              <p className="text-black flex justify-center items-center bg-white p-1 text-sm rounded-2xl">
+                                {/* {(new Date(quiz.end_date)).toISOString()} */}
+                                {quiz.end_date.toString()}
+                              </p>
+                            </div>
+                            <button onClick={()=>{
+                              navigate(`/course/${courseID}/quizzes/${quiz.id}`)
+                            }}>Attempt</button>
+                          </div>
+                        </div>
+                      );
                     })}
                   </div>
                 ) : (

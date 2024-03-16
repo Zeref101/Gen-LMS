@@ -68,7 +68,7 @@ export const fetchUserNotes = async (userId: string) => {
 
 export const fetchUserCourses = async (userID: string) => {
   try {
-    const uid = "8184e5fb-d03d-4130-8d01-9e87dbc151df";
+    const uid = "wfPc1lDadJcMcID4Nyyz";
     // const [courses, setCourses] = useState<DocumentData[]>([]);
     const courses = []
     const docRef = doc(db, "users", uid);
@@ -78,8 +78,8 @@ export const fetchUserCourses = async (userID: string) => {
     if (!courseData) {
       console.log("No such document!");
     } else {
-      console.log(courseData["courseId"]);
-      const courseId = courseData["courseId"];
+      console.log(courseData["course_list"]);
+      const courseId = courseData["course_list"];
       for (const course of courseId) {
         const courseRef = doc(db, "courses", course);
         const courseSnap = await getDoc(courseRef);
