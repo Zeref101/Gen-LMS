@@ -30,11 +30,11 @@ const MarkdownNotes: React.FC<MarkdownNotesProps> = ({ markdown, constraints = '
         setIsEditing(!isEditing);
         if (isEditing) {
             toast({
-                title: "You are in Editing mode",
+                title: "You have saved the Note",
             });
         } else {
             toast({
-                title: "You have saved the Note",
+                title: "You are in Editing mode",
             });
         }
     };
@@ -54,7 +54,7 @@ const MarkdownNotes: React.FC<MarkdownNotesProps> = ({ markdown, constraints = '
     };
 
     return (
-        <div className="flex flex-col justify-center items-start bg-slate-300 w-full rounded-lg p-4 text-black text-[20px] max-h-screen overflow-y-auto">
+        <div className="flex flex-col justify-center items-start bg-[#efe5f9] w-full rounded-lg p-4 text-black text-[20px] drop-shadow-sm max-h-screen overflow-y-auto">
             {!location.pathname.startsWith('/notes') && (
                 <div className='flex gap-8'>
                     <Button
@@ -82,7 +82,7 @@ const MarkdownNotes: React.FC<MarkdownNotesProps> = ({ markdown, constraints = '
                     <ReactMarkdown children={editableMarkdown} />
                 </div>
             )}
-            <Toaster />
+
         </div>
     );
 };
