@@ -106,7 +106,7 @@ export default function Quizzes() {
               {/* Widget */}
               <div className="bg-white p-4 rounded-lg shadow">
                 {attemptedQuizzes.length > 0 ? (
-                  <div className="flex flex-col w-full h-full overflow-scroll overflow-x-hidden">
+                  <div className="flex flex-col gap-10 w-full h-full overflow-scroll overflow-x-hidden">
                     <h1>Attempted Quizzes</h1>
                     {attemptedQuizzes.map((quiz, index) => {
                       return (
@@ -133,7 +133,7 @@ export default function Quizzes() {
 
               <div className="bg-white p-4 rounded-lg shadow">
                 {unattemptedQuizzes.length > 0 ? (
-                  <div className="flex flex-col w-full h-full overflow-scroll overflow-x-hidden">
+                  <div className="flex flex-col gap-4 w-full h-full overflow-scroll overflow-x-hidden">
                     <h1>Unattempted Quizzes</h1>
                     {unattemptedQuizzes.map((quiz, index) => {
                       const endDate = timestampToDate(quiz.end_date);
@@ -143,16 +143,16 @@ export default function Quizzes() {
                           key={index}
                           className={`flex items-center rounded-lg`}
                         >
-                          <div className="w-full bg-red-500 h-1/2  rounded-3xl flex flex-row gap-2 justify-between items-center p-6 ">
-                            <div className="flex flex-row justify-center items-center gap-4">
+                          <div className="w-full bg-red-500 h-full  rounded-3xl flex flex-col gap-2 justify-between items-center px-6 py-4">
+                            <div className="flex flex-row justify-between w-full items-center gap-4">
                               <h3 className="text-white font-semibold">
                                 {quiz.name}
                               </h3>
                               <p className="text-black flex h-10 justify-center items-center bg-white p-1 text-sm rounded-2xl">
-                                {endDate.toString()}
+                                {quiz.end_date.toString()}
                               </p>
                             </div>
-                            <Button className="bg-red-200 text-black hover:bg-red-300" onClick={() => {
+                            <Button className="bg-red-200 self-end text-black hover:bg-red-300" onClick={() => {
                               navigate(`/course/${courseID}/quizzes/${quiz.id}`)
                             }}>Attempt</Button>
                           </div>
@@ -168,11 +168,6 @@ export default function Quizzes() {
             </div>
             {/* Charts */}
             <div className="mt-4">
-              <div className="bg-white p-4 rounded-lg shadow">
-                <div className="text-sm text-gray-500">Learner Insight</div>
-                <div className="flex justify-between items-center">
-                </div>
-              </div>
             </div>
           </div>
         </main>

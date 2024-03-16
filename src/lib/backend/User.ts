@@ -134,8 +134,8 @@ console.log(attemptedQuizzes, "hi");
 
 // Fetch the quizzes that have been attempted by the user
 const submitsPromises = attemptedQuizzes.map(async (quizId) => {
-  const submit_quizzesRef = collection(db, "quiz");
-  const sq = query(submit_quizzesRef, where("quiz_id", "==", quizId));
+  const submit_quizzesRef = collection(db, "submit_quiz");
+  const sq = query(submit_quizzesRef, where("user_id", "==", quizId));
   const submitquerySnapshot = await getDocs(sq);
   const submitfetchedQuizzes: Submitted_Quiz[] = [];
   submitquerySnapshot.forEach((doc: QueryDocumentSnapshot) => {

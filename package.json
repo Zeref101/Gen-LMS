@@ -45,7 +45,6 @@
     "smooth-scrollbar": "^8.8.4",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
-    "use-text-selection": "^1.1.5",
     "zod": "^3.22.4"
   },
   "devDependencies": {
