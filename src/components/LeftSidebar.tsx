@@ -2,16 +2,33 @@ import { Link, NavLink } from "react-router-dom"
 // import { Button } from "./ui/button"
 import { useLocation } from "react-router-dom";
 import { sidebarLinks } from "@/constants";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
+import { fetchUserCourses } from "@/lib/backend/User";
+import { DocumentData } from "firebase/firestore";
 
 
 const LeftSidebar = () => {
     const { pathname } = useLocation();
     const [showCourses, setShowCourses] = useState(false);
+    const [userCourses, setUserCourses] = useState<DocumentData>([]);
     const courses = ['Course 1', 'Course 2', 'Course 3']; // Replace this with your actual list of courses
     const onNotesPage = pathname.includes("/notes");
-
+    useEffect(() => {
+        const fetchCourses = async () => {
+          try {
+            const courses = await fetchUserCourses("hello");
+            if (courses) {
+              setUserCourses(courses);
+            } else {
+              console.error('Error fetching user courses: courses is undefined');
+            }
+          } catch (error) {
+            console.error('Error fetching user courses:', error);
+          }
+        };
+        fetchCourses();
+      }, []);
     return (
         <div className="hidden md:flex px-6 py-8 flex-col justify-between bg-gray-50 rounded-lg h-full w-full sticky left-0 top-0 border border-[#2f2f2f]">
             <div className='flex flex-col gap-11'>
@@ -56,14 +73,14 @@ const LeftSidebar = () => {
                         </Button>
                         {showCourses && (
                             <div className="flex flex-col gap-4 mt-4">
-                                {courses.map((course, index) => (
+                                {userCourses.map((course:DocumentData, index:number) => (
                                     <NavLink
                                         key={index}
-                                        to={`/${course.toLowerCase().replace(' ', '-')}`}
+                                        to={`/course/${course.course_id}`}
                                         className={`flex gap-4 text-[#080808] items-center  rounded-lg p-4 group-hover:invert bg-[#a855f71f] group-hover:brightness-0 group-hover:transition `}
                                     >
                                         <img src={`/public/icons/home.svg`} alt={`home`} />
-                                        {course}
+                                        {course.name}
                                     </NavLink>
                                 ))}
                             </div>

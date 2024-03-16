@@ -117,7 +117,7 @@ export default function Quizzes() {
                         >
                           <div className="w-full bg-green-500 h-full rounded-3xl flex justify-between items-center p-2 ">
                             <h3 className="text-white font-semibold">
-                              {quiz.id}
+                              {quiz.name}
                             </h3>
                             <p className="text-black bg-white p-4 rounded-2xl">
                               {quiz.marks_scored}
@@ -181,7 +181,7 @@ export default function Quizzes() {
                           <div className="w-full bg-red-400 h-full rounded-3xl flex flex-col gap-4 justify-between items-center p-2 ">
                             <div className="flex gap-4">
                               <h3 className="text-white font-semibold">
-                                {quiz.id}
+                                {quiz.name}
                               </h3>
                               <p className="text-black flex justify-center items-center bg-white p-1 text-sm rounded-2xl">
                                 {/* {(new Date(quiz.end_date)).toISOString()} */}
