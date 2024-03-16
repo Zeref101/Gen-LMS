@@ -8,6 +8,7 @@ import SigninForm from './_auth/forms/SigninForm';
 import CoursePage from './_root/pages/CoursePage';
 import NotesPage from './_root/pages/NotesPage';
 import Note from './_root/pages/Note';
+import CreateNotes from './_root/pages/CreateNotes';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
             <Route path='/course/:courseID/' element={<CoursePage />} />
             <Route path='/notes' element={<Note />} />
             <Route path="/notes/:noteID" element={<NotesPage />} />
+            <Route path="/create-notes" element={<CreateNotes />} />
 
           </Route>
 
