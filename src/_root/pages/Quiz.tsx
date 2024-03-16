@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { timestampToDate } from "@/lib/util";
 
 ChartJS.register(
   CategoryScale,
@@ -27,6 +28,7 @@ import LeftSidebar from "@/components/LeftSidebar";
 import { useParams } from "react-router-dom";
 import { fetchStudentquiz } from "@/lib/backend/User";
 import { Submitted_Quiz, Quiz } from "@/lib/backend/User";
+import { Button } from "@/components/ui/button";
 
 export default function Quizzes() {
   const { courseID } = useParams<string>();
@@ -64,10 +66,7 @@ export default function Quizzes() {
     <div className="min-h-screen w-full bg-gray-100">
       {/* Sidebar */}
       <div className="flex">
-        <aside className="w-64 bg-white min-h-screen p-4">
-          <div className="text-gray-900 font-bold">Fikri Studio</div>
-          <LeftSidebar></LeftSidebar>
-        </aside>
+
         <main className="flex-1">
           {/* Header */}
           <header className="bg-white shadow p-4 flex justify-between items-center">
@@ -131,66 +130,31 @@ export default function Quizzes() {
                   <div>No Attempted Quizzes</div>
                 )}
               </div>
-              {/* Widget */}
-              {/* <div className="bg-white p-4 rounded-lg shadow flex justify-center items-center">
-                <svg width="160" height="160" viewBox="0 0 32 32">
-                  <circle
-                    r="16"
-                    cx="16"
-                    cy="16"
-                    fill="transparent"
-                    stroke="#34D399"
-                    strokeWidth="4"
-                    strokeDasharray="calc(32 * 3.14)"
-                    strokeDashoffset="calc(32 * 3.14 * ((100 - 80) / 100))"
-                  />
-                  <circle
-                    r="16"
-                    cx="16"
-                    cy="16"
-                    fill="transparent"
-                    stroke="#60A5FA"
-                    strokeWidth="4"
-                    strokeDasharray="calc(32 * 3.14)"
-                    strokeDashoffset="0"
-                  />
-                  <text
-                    x="50%"
-                    y="50%"
-                    textAnchor="middle"
-                    fill="#1F2937"
-                    dy=".3em"
-                    fontWeight="bold"
-                    fontSize="4"
-                  >
-                    80%
-                  </text>
-                </svg>
-              </div> */}
-              {/* Widget */}
+
               <div className="bg-white p-4 rounded-lg shadow">
                 {unattemptedQuizzes.length > 0 ? (
                   <div className="flex flex-col w-full h-full overflow-scroll overflow-x-hidden">
                     <h1>Unattempted Quizzes</h1>
                     {unattemptedQuizzes.map((quiz, index) => {
+                      const endDate = timestampToDate(quiz.end_date);
+                      console.log(endDate.toString());
                       return (
                         <div
                           key={index}
                           className={`flex items-center rounded-lg`}
                         >
-                          <div className="w-full bg-red-400 h-full rounded-3xl flex flex-col gap-4 justify-between items-center p-2 ">
-                            <div className="flex gap-4">
+                          <div className="w-full bg-red-500 h-1/2  rounded-3xl flex flex-row gap-2 justify-between items-center p-6 ">
+                            <div className="flex flex-row justify-center items-center gap-4">
                               <h3 className="text-white font-semibold">
                                 {quiz.name}
                               </h3>
-                              <p className="text-black flex justify-center items-center bg-white p-1 text-sm rounded-2xl">
-                                {/* {(new Date(quiz.end_date)).toISOString()} */}
-                                {quiz.end_date.toString()}
+                              <p className="text-black flex h-10 justify-center items-center bg-white p-1 text-sm rounded-2xl">
+                                {endDate.toString()}
                               </p>
                             </div>
-                            <button onClick={()=>{
+                            <Button className="bg-red-200 text-black hover:bg-red-300" onClick={() => {
                               navigate(`/course/${courseID}/quizzes/${quiz.id}`)
-                            }}>Attempt</button>
+                            }}>Attempt</Button>
                           </div>
                         </div>
                       );
