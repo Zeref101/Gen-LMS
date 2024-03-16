@@ -10,7 +10,6 @@ import 'react-vertical-timeline-component/style.min.css';
 
 export default function CoursePage() {
   // const [progress, setProgress] = useState(0);
-  { `/show_upcoming_quiz` }
   const { courseID } = useParams();
   return (
     <div className="flex h-screen w-full">
