@@ -49,7 +49,7 @@ const LoginForm = () => {
             const credential = GoogleAuthProvider.credentialFromResult(result);
             if (credential) {
                 const token = credential.accessToken;
-
+                console.log(token)
                 // rest of your code...
             } else {
                 console.error("No credential found in result");
@@ -58,7 +58,7 @@ const LoginForm = () => {
             const user = result.user;
             localStorage.setItem('user', JSON.stringify(user));            // You can perform further actions with the user object, such as redirecting to a dashboard
         } catch (error) {
-            console.error("Error during Google sign-in:", error.message);
+            console.error("Error during Google sign-in");
             // Handle errors here, such as displaying a notification to the user
         }
     };
