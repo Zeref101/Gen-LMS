@@ -63,7 +63,9 @@ const CreateNotes = () => {
                 )}
                 {resData && !isLoading && (
                     <div className="p-4 mt-6 w-full drop-shadow-md inset-2">
+
                         <MarkdownNotes markdown={resData} constraints={constraints} subject={subject} />
+
                     </div>
                 )}
             </div>
