@@ -15,6 +15,7 @@ import {
   QueryDocumentSnapshot,
 } from "firebase/firestore";
 import { db } from "./firebase.ts";
+import axios from "axios";
 // import { useState } from "react";
 
 export interface Quiz {
@@ -116,18 +117,33 @@ export const fetchStudentquiz = async (
     fetchedQuizzes.push({ id: doc.id, ...quizData } as Quiz);
   });
 
-  // Fetch all submitted quizzes in parallel using Promise.all
-  const submitsPromises = fetchedQuizzes.map(async (quiz) => {
-    const submit_quizzesRef = collection(db, "submit_quiz");
-    const sq = query(submit_quizzesRef, where("quiz_id", "==", quiz.id));
-    const submitquerySnapshot = await getDocs(sq);
-    const submitfetchedQuizzes: Submitted_Quiz[] = [];
-    submitquerySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-      const quizData = doc.data();
-      submitfetchedQuizzes.push({ id: doc.id, ...quizData } as Submitted_Quiz);
-    });
-    return submitfetchedQuizzes;
+  // Fetch the user document where the user_id matches the current user
+const usersRef = collection(db, "users");
+const uq = query(usersRef, where("user_id", "==", "wfPc1lDadJcMcID4Nyyz"));
+const userQuerySnapshot = await getDocs(uq);
+// console.log(doc.data().attempted_quizzes)
+
+// Get the attempted_quizzes field of the user document
+let attemptedQuizzes: string[] = [];
+userQuerySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+  const userData = doc.data();
+  attemptedQuizzes = userData.submitted_quizzes;
+  console.log(userData)
+});
+console.log(attemptedQuizzes, "hi");
+
+// Fetch the quizzes that have been attempted by the user
+const submitsPromises = attemptedQuizzes.map(async (quizId) => {
+  const submit_quizzesRef = collection(db, "quiz");
+  const sq = query(submit_quizzesRef, where("quiz_id", "==", quizId));
+  const submitquerySnapshot = await getDocs(sq);
+  const submitfetchedQuizzes: Submitted_Quiz[] = [];
+  submitquerySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    const quizData = doc.data();
+    submitfetchedQuizzes.push({ id: doc.id, ...quizData } as Submitted_Quiz);
   });
+  return submitfetchedQuizzes;
+});
 
   // Wait for all submitted quizzes to be fetched
   const submittedQuizzesArray = await Promise.all(submitsPromises);
@@ -147,3 +163,12 @@ export const fetchquiz = async (quizID: string) => {
     return [];
   }
 };
+
+export const fetchTimeline = async (courseID: string) =>{
+  const uid = "wfPc1lDadJcMcID4Nyyz";
+  axios.post(`http://192.168.47.237:8000/show_upcoming_quiz`,{
+    student_id:uid
+  }).then(response=>{
+    console.log(response);
+  })
+}

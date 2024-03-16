@@ -11,7 +11,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { timestampToDate } from "@/lib/util";
 
 ChartJS.register(
   CategoryScale,
@@ -24,13 +23,12 @@ ChartJS.register(
 );
 
 import { useNavigate } from "react-router-dom";
-import LeftSidebar from "@/components/LeftSidebar";
+// import LeftSidebar from "@/components/LeftSidebar";
 import { useParams } from "react-router-dom";
 import { fetchStudentquiz } from "@/lib/backend/User";
 import { Submitted_Quiz, Quiz } from "@/lib/backend/User";
-import { Button } from "@/components/ui/button";
 
-export default function Quizzes() {
+export default function TeacherQuiz() {
   const { courseID } = useParams<string>();
   const [unattemptedQuizzes, setunAttemptedQuizzes] = useState<Quiz[]>([]);
   const [attemptedQuizzes, setAttemptedQuizzes] = useState<Submitted_Quiz[]>(
@@ -65,9 +63,8 @@ export default function Quizzes() {
   return (
     <div className="min-h-screen w-full bg-gray-100">
       {/* Sidebar */}
-      <div className="flex">
-
-        <main className="flex-1">
+      <div className="flex h-full">
+        <main className="flex-1 overflow-hidden h-full w-full">
           {/* Header */}
           <header className="bg-white shadow p-4 flex justify-between items-center">
             <div className="flex items-center">
@@ -79,35 +76,24 @@ export default function Quizzes() {
               </span>
             </div>
             <div className="flex items-center">
-              <button title="hi" className="rounded-full bg-gray-200 p-2 mr-2">
-                <i className="fas fa-plus"></i>
-              </button>
-              <button title="hi" className="rounded-full bg-gray-200 p-2 mr-2">
-                <i className="fas fa-bell"></i>
-              </button>
-              <div className="relative">
-                <input
-                  type="text"
-                  className="rounded-full bg-gray-200 p-2"
-                  placeholder="Search"
-                />
-              </div>
               <div className="ml-4">
-                <button className="bg-gray-300 rounded-full text-sm px-4 py-2">
-                  Theresa <i className="fas fa-chevron-down"></i>
+                <button onClick={()=>{
+                  navigate(`/course/${courseID}/quizzes/createQuiz`)
+                }} className="bg-green-500 rounded-full text-sm px-4 py-2">
+                  Create Quiz <i className="fas fa-chevron-down"></i>
                 </button>
               </div>
             </div>
           </header>
           {/* Main content */}
-          <div className="p-4">
+          <div className="p-4 overflow-hidden h-[88%] w-full">
             {/* Dashboard widgets */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="flex w-full h-full">
               {/* Widget */}
-              <div className="bg-white p-4 rounded-lg shadow">
+              <div className="bg-white w-full p-4 rounded-lg shadow">
                 {attemptedQuizzes.length > 0 ? (
                   <div className="flex flex-col w-full h-full overflow-scroll overflow-x-hidden">
-                    <h1>Attempted Quizzes</h1>
+                    <h1>Created Quizzes</h1>
                     {attemptedQuizzes.map((quiz, index) => {
                       return (
                         <div
@@ -127,53 +113,29 @@ export default function Quizzes() {
                     })}
                   </div>
                 ) : (
-                  <div>No Attempted Quizzes</div>
+                  <div>No Created Quizzes</div>
                 )}
               </div>
-
-              <div className="bg-white p-4 rounded-lg shadow">
-                {unattemptedQuizzes.length > 0 ? (
-                  <div className="flex flex-col w-full h-full overflow-scroll overflow-x-hidden">
-                    <h1>Unattempted Quizzes</h1>
-                    {unattemptedQuizzes.map((quiz, index) => {
-                      const endDate = timestampToDate(quiz.end_date);
-                      console.log(endDate.toString());
-                      return (
-                        <div
-                          key={index}
-                          className={`flex items-center rounded-lg`}
-                        >
-                          <div className="w-full bg-red-500 h-1/2  rounded-3xl flex flex-row gap-2 justify-between items-center p-6 ">
-                            <div className="flex flex-row justify-center items-center gap-4">
-                              <h3 className="text-white font-semibold">
-                                {quiz.name}
-                              </h3>
-                              <p className="text-black flex h-10 justify-center items-center bg-white p-1 text-sm rounded-2xl">
-                                {endDate.toString()}
-                              </p>
-                            </div>
-                            <Button className="bg-red-200 text-black hover:bg-red-300" onClick={() => {
-                              navigate(`/course/${courseID}/quizzes/${quiz.id}`)
-                            }}>Attempt</Button>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <div>No Unattempted Quizzes</div>
-                )}
-                {/* Activity list */}
-              </div>
+              
             </div>
             {/* Charts */}
-            <div className="mt-4">
+            {/* <div className="mt-4">
               <div className="bg-white p-4 rounded-lg shadow">
                 <div className="text-sm text-gray-500">Learner Insight</div>
                 <div className="flex justify-between items-center">
+                  <div className="w-full">
+                    Bar chart
+                    <div className="flex flex-col items-end">
+                      <div className="chart-bar" style={{ width: "80%" }}></div>
+                      <div className="chart-bar" style={{ width: "60%" }}></div>
+                      <div className="chart-bar" style={{ width: "70%" }}></div>
+                      <div className="chart-bar" style={{ width: "90%" }}></div>
+                      <div className="chart-bar" style={{ width: "50%" }}></div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </main>
       </div>
