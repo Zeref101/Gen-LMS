@@ -217,9 +217,10 @@ export default function Home() {
                         className="w-full h-full rounded-3xl flex items-center space-x-4 p-4 object-contain"
                       >
                         <img
-                          className="basis-1/6 w-1/5 h-full"
+                          className=" w-[40px] h-[40px]"
                           src={course.image_url}
-                          alt=""
+                          alt="courseImg"
+
                         />
                         <div className="content basis-4/6">
                           <h3 className="text-white font-semibold">
