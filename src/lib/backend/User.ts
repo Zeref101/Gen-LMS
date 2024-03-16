@@ -4,9 +4,24 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { app } from "./firebase.ts"; // import the app from your firebase.ts file
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc,getDocs,  query, where, collection, orderBy, QueryDocumentSnapshot } from "firebase/firestore";
 import { db } from "./firebase.ts";
+// import { useState } from "react";
 
+export interface Quiz {
+  id: string;
+  courseId: string;
+  end_date: Date; // Depending on your data structure, this might need to adjust
+  // Add other quiz properties here
+}
+export interface Submitted_Quiz {
+  id: string;
+  quiz_id: string;
+  user_id: string; // Depending on your data structure, this might need to adjust
+  // Add other quiz properties here
+  marks_scored: number;
+  saved_answers: string[];
+}
 export const handleSignup = async (email: string, password: string) => {
   const auth = getAuth(app);
   try {
@@ -48,4 +63,65 @@ export const fetchUserNotes = async (userId: string) => {
   } catch (error) {
     console.error("Error fetching document:", error);
   }
+};
+
+
+export const fetchUserCourses = async (userID: string) => {
+  try {
+    const uid = "8184e5fb-d03d-4130-8d01-9e87dbc151df";
+    // const [courses, setCourses] = useState<DocumentData[]>([]);
+    const courses = []
+    const docRef = doc(db, "users", uid);
+    const docSnap = await getDoc(docRef);
+    console.log(docSnap.data());
+    const courseData = docSnap.data();
+    if (!courseData) {
+      console.log("No such document!");
+    } else {
+      console.log(courseData["courseId"]);
+      const courseId = courseData["courseId"];
+      for (const course of courseId) {
+        const courseRef = doc(db, "courses", course);
+        const courseSnap = await getDoc(courseRef);
+        courses.push(courseSnap.data());
+      }
+    }
+    console.log(courses);
+    return courses;
+  }
+  catch (error) {
+    console.error("Error fetching document:", error);
+  }
+};
+
+
+export const fetchStudentquiz = async (courseID: string): Promise<[Quiz[], Submitted_Quiz[]]> => {
+  const quizzesRef = collection(db, 'quiz');
+  const q = query(quizzesRef, where('course_id', '==', courseID));
+  const querySnapshot = await getDocs(q);
+  const fetchedQuizzes: Quiz[] = [];
+  querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+      const quizData = doc.data();
+      fetchedQuizzes.push({ id: doc.id, ...quizData } as Quiz);
+  });
+
+  // Fetch all submitted quizzes in parallel using Promise.all
+  const submitsPromises = fetchedQuizzes.map(async (quiz) => {
+      const submit_quizzesRef = collection(db, 'submit_quiz');
+      const sq = query(submit_quizzesRef, where('quiz_id', '==', quiz.id));
+      const submitquerySnapshot = await getDocs(sq);
+      const submitfetchedQuizzes: Submitted_Quiz[] = [];
+      submitquerySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+          const quizData = doc.data();
+          submitfetchedQuizzes.push({ id: doc.id, ...quizData } as Submitted_Quiz);
+      });
+      return submitfetchedQuizzes;
+  });
+
+  // Wait for all submitted quizzes to be fetched
+  const submittedQuizzesArray = await Promise.all(submitsPromises);
+  // Flatten the array of arrays to a single array
+  const submitfetchedQuizzes: Submitted_Quiz[] = submittedQuizzesArray.flat();
+
+  return [fetchedQuizzes, submitfetchedQuizzes];
 };

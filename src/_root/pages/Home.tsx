@@ -1,9 +1,30 @@
 // import React from 'react'
 import LeftSidebar from "../../components/LeftSidebar";
 import { useNavigate } from "react-router-dom";
+import { fetchUserCourses } from "@/lib/backend/User";
+import { DocumentData } from 'firebase/firestore'; 
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const navigate = useNavigate();
+  // const [courses, setCourses] = useState<DocumentData[]>([]);
+  const [userCourses, setUserCourses] = useState<DocumentData>([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const courses = await fetchUserCourses("hello");
+        if (courses) {
+          setUserCourses(courses);
+        } else {
+          console.error('Error fetching user courses: courses is undefined');
+        }
+      } catch (error) {
+        console.error('Error fetching user courses:', error);
+      }
+    };
+    fetchCourses();
+  }, []);
   const courses = [
     {
       name: "Course 1",
@@ -192,7 +213,7 @@ export default function Home() {
               </div>
             </div>
             <div className="h-full overflow-scroll overflow-x-hidden">
-              {courses.map((course, index) => (
+              {userCourses.map((course:DocumentData, index:number) => (
                 <div key={index} className={`flex items-center p-4 rounded-lg`}>
                   <div
                     style={{
@@ -200,16 +221,25 @@ export default function Home() {
                     }}
                     className="w-full h-full rounded-3xl flex items-center space-x-4 p-4 object-contain"
                   >
-                    <img className="basis-1/6 h-full" src={course.icon} alt="" />
+                    <img
+                      className="basis-1/6 w-1/5 h-full"
+                      src={course.image_url}
+                      alt=""
+                    />
                     <div className="content basis-4/6">
-                      <h3 className="text-white font-semibold">{course.name}</h3>
-                      <p className="text-white text-opacity-80 text-sm">
+                      <h3 className="text-white font-semibold">
+                        {course.name}
+                      </h3>
+                      {/* <p className="text-white text-opacity-80 text-sm">
                         {course.description}
-                      </p>
+                      </p> */}
                     </div>
-                    <button onClick={() => {
-                      navigate(`/course/${index}`)
-                    }} className="justify-center self-end basis-1/6 flex items-center bg-blue-500 h-full p-4 drop-shadow-buttons rounded-3xl text-white">
+                    <button
+                      onClick={() => {
+                        navigate(`/course/${course.course_id}`);
+                      }}
+                      className="justify-center self-end basis-1/6 flex items-center bg-blue-500 h-full p-4 drop-shadow-buttons rounded-3xl text-white"
+                    >
                       View
                     </button>
                   </div>
@@ -233,7 +263,7 @@ export default function Home() {
                       <div
                         style={{
                           width: `${course.progress * 100}%`,
-                          background: `${colors[index % colors.length]}`
+                          background: `${colors[index % colors.length]}`,
                         }}
                         className={`h-full rounded-3xl`}
                       ></div>
@@ -248,71 +278,30 @@ export default function Home() {
               <div className="mt-4 overflow-scroll h-full">
                 {timelines.map((event, index) => {
                   return (
-                    <div key={index} className="flex justify-center items-center">
+                    <div
+                      key={index}
+                      className="flex justify-center items-center"
+                    >
                       <div className="desc">
                         <h3>{event.title}</h3>
                         <p className="text-slate-400">{event.description}</p>
                       </div>
                       <div className="time">
-                        <p className=" whitespace-nowrap text-slate-600">{event.date}</p>
-                        <p className=" whitespace-nowrap text-slate-600">{event.time}</p>
+                        <p className=" whitespace-nowrap text-slate-600">
+                          {event.date}
+                        </p>
+                        <p className=" whitespace-nowrap text-slate-600">
+                          {event.time}
+                        </p>
                       </div>
-                      <button className="flex-shrink-0 bg-blue-500 h-full p-4 rounded-3xl text-white ml-4">
-                        Enroll
-                      </button>
                     </div>
-                  )
+                  );
                 })}
-              </div>
-            </div>
-            <div className="space-y-4">
-              <div className="bg-gray-50 p-4 rounded-2xl space-y-4">
-                <h2 className="text-xl font-semibold">My learning</h2>
-                <div className="space-y-2">
-                  {progress.map((course, index) => (
-                    <div
-                      key={index}
-                      className="flex flex-col justify-between items-center"
-                    >
-                      <div className="flex-grow">
-                        <h1 className="font-semibold">{course.course}</h1>
-                      </div>
-                      <div className="w-full h-4 rounded-3xl bg-slate-300">
-                        <div
-                          style={{ width: `${course.progress * 100}%` }}
-                          className={`h-full rounded-3xl bg-slate-700`}
-                        ></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="bg-gray-50 p-4 rounded-2xl">
-                <h2 className="text-xl font-semibold">Timeline</h2>
-                <div className="flex justify-between items-center mt-4"></div>
-                <div className="mt-4">
-                  {timelines.map((event, index) => {
-                    return (
-                      <div key={index} className="flex justify-center items-center">
-                        <div className="desc">
-                          <h3>{event.title}</h3>
-                          <p className="text-slate-400">{event.description}</p>
-                        </div>
-                        <div className="time">
-                          <p className=" whitespace-nowrap text-slate-600">{event.date}</p>
-                          <p className=" whitespace-nowrap text-slate-600">{event.time}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
-
   );
 }

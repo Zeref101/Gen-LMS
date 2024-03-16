@@ -8,7 +8,7 @@ type AuthContextType = {
 };
 
 const AuthContextWrap = createContext<AuthContextType>({
-    isAuthenticated: false,
+    isAuthenticated: true,
     setIsAuthenticated: () => { },
     isLoading: true,
 });
