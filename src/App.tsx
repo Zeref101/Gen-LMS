@@ -11,6 +11,7 @@ import Note from './_root/pages/Note';
 import CreateNotes from './_root/pages/CreateNotes';
 // import Quiz from './_root/pages/Quiz';
 import Quizzes from './_root/pages/Quiz';
+import MCQ from './_root/pages/MCQ';
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
             <Route path="/create-notes" element={<CreateNotes />} />
 
             <Route path='/course/:courseID/quizzes' element={<Quizzes />} />
+            <Route path='/course/:courseID/quizzes/:quizID' element={<MCQ />} />
           </Route>
 
         </Routes>
