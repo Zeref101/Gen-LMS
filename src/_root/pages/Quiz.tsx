@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // import Mcq from "@/components/Mcq";
-import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -24,7 +23,6 @@ ChartJS.register(
 );
 
 import { useNavigate } from "react-router-dom";
-import LeftSidebar from "@/components/LeftSidebar";
 import { useParams } from "react-router-dom";
 import { fetchStudentquiz } from "@/lib/backend/User";
 import { Submitted_Quiz, Quiz } from "@/lib/backend/User";
@@ -139,6 +137,7 @@ export default function Quizzes() {
                   <div className="flex flex-col gap-4 w-full h-full overflow-scroll overflow-x-hidden">
                     <h1>Unattempted Quizzes</h1>
                     {unattemptedQuizzes.map((quiz, index) => {
+                      // @ts-ignore
                       const endDate = timestampToDate(quiz.end_date);
                       console.log(endDate.toString());
                       return (

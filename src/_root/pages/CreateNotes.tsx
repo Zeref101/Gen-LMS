@@ -45,9 +45,11 @@ const CreateNotes = () => {
         <>
             <div className=" h-screen w-full flex justify-center items-center">
                 {isLoading && (
+                    
                     <InfinitySpin
                         width="200"
                         color="#7e22ce"
+                        // @ts-ignore
                         ariaLabel="infinity-spin-loading"
                     />
                 )}

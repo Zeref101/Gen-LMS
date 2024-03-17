@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // import Mcq from "@/components/Mcq";
-import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -38,6 +37,7 @@ export default function TeacherQuiz() {
   // console.log(courseID);
   useEffect(() => {
     async function fetchquiz() {
+      // console.log(unattemptedQuizzes)
       if (courseID) {
         const quizzes = await fetchStudentquiz(courseID);
         console.log("quiz", quizzes);

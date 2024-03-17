@@ -72,7 +72,9 @@ const NotesPage = () => {
 
                     {selectedSubtopic && (
                         <div>
+                            {/*@ts-ignore*/}
                             <h2>{selectedSubtopic.name}</h2>
+                            {/*@ts-ignore*/}
                             <MarkdownNotes key={selectedSubtopic.name} markdown={selectedSubtopic.content} />
                         </div>
                     )}

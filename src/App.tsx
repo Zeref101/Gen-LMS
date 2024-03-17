@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {  Route, Routes } from 'react-router-dom';
 import RootLayout from './_root/RootLayout';
 import Home from './_root/pages/Home';
 import AuthLayout from './_auth/AuthLayout';
