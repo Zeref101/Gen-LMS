@@ -16,7 +16,8 @@ import CreateQuiz from './_root/pages/CreateQuiz';
 import Assignment from './_root/pages/Assignment';
 
 const App = () => {
-  const isTeacher = false;
+  const user = localStorage.getItem("userid");
+
   return (
 
     <main className=" min-h-screen bg-dark-1 bg-[#eee]">
@@ -33,7 +34,7 @@ const App = () => {
           <Route path='/notes' element={<Note />} />
           <Route path="/notes/:noteID" element={<NotesPage />} />
           <Route path="/create-notes" element={<CreateNotes />} />
-          <Route path='/course/:courseID/quizzes' element={(!isTeacher) ? <Quizzes /> : <TeacherQuiz />} />
+          <Route path='/course/:courseID/quizzes' element={!(user === "rdbGKWQ5LPSTBblBHT4p") ? <Quizzes /> : <TeacherQuiz />} />
           <Route path='/course/:courseID/quizzes/:quizID' element={<MCQ />} />
           <Route path='/course/:courseID/quizzes/createQuiz' element={<CreateQuiz />} />
 

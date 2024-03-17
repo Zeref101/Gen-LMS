@@ -5,6 +5,7 @@ import { fetchUserCourses } from "@/lib/backend/User";
 import { DocumentData } from 'firebase/firestore';
 import { useEffect, useState } from "react";
 import { InfinitySpin } from 'react-loader-spinner';
+import axios from "axios";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -86,93 +87,35 @@ export default function Home() {
 
   const progress = [
     {
-      course: "Course 1",
+      course: "Java",
       progress: 0.5,
     },
     {
-      course: "Course 1",
+      course: "Python",
       progress: 0.2,
     },
-    {
-      course: "Course 1",
-      progress: 0.8,
-    },
-    {
-      course: "Course 1",
-      progress: 0.9,
-    },
-    {
-      course: "Course 1",
-      progress: 0.1,
-    },
-    {
-      course: "Course 1",
-      progress: 0.3,
-    },
-    {
-      course: "Course 1",
-      progress: 0.01,
-    },
-    {
-      course: "Course 1",
-      progress: 0.0001,
-    },
-    {
-      course: "Course 1",
-      progress: 1.0,
-    },
-    {
-      course: "Course 1",
-      progress: 0.2,
-    },
-    {
-      course: "Course 1",
-      progress: 0.5,
-    },
-    {
-      course: "Course 1",
-      progress: 0.5,
-    },
-  ];
 
-  const timelines = [
-    {
-      date: "2021-09-01",
-      time: "12:00",
-      title: "First day of school",
-      description: "I am so excited to start my first day of school",
-    },
-    {
-      date: "2021-09-01",
-      time: "12:00",
-      title: "First day of school",
-      description: "I am so excited to start my first day of school",
-    },
-    {
-      date: "2021-09-01",
-      time: "12:00",
-      title: "First day of school",
-      description: "I am so excited to start my first day of school",
-    },
-    {
-      date: "2021-09-01",
-      time: "12:00",
-      title: "First day of school",
-      description: "I am so excited to start my first day of school",
-    },
-    {
-      date: "2021-09-01",
-      time: "12:00",
-      title: "First day of school",
-      description: "I am so excited to start my first day of school",
-    },
-    {
-      date: "2021-09-01",
-      time: "12:00",
-      title: "First day of school",
-      description: "I am so excited to start my first day of school",
-    },
   ];
+  const [timeline, setTimeline] = useState([])
+  useEffect(() => {
+    const userItem = localStorage.getItem("user");
+    if (userItem !== null) {
+      const user = JSON.parse(userItem);
+      if (user && user.uid) {
+        axios.post("http://3.109.203.255:80/show_upcoming_quiz", {
+          student_id: "wfPc1lDadJcMcID4Nyyz"
+        })
+          .then(res => {
+            setTimeline(res.data.quizes);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      } else {
+        console.log("Error");
+      }
+    }
+  }, []);
   const currentDate = new Date().toJSON().slice(0, 10);
   console.log(currentDate);
   return (
@@ -246,7 +189,7 @@ export default function Home() {
               <div className="flex grow basis-1/5 gap-2 flex-col h-full overflow-hidden">
                 <div className="bg-gray-50 p-4 rounded-2xl h-1/2 basis-1/2">
                   <h2 className=" text-2xl font-semibold text-purple-700">My learning</h2>
-                  <div className=" h-full overflow-scroll">
+                  <div className=" h-full overflow-hidden">
                     {progress.map((course, index) => (
                       <div
                         key={index}
@@ -272,27 +215,18 @@ export default function Home() {
                   <h2 className="text-2xl font-semibold text-purple-700">Timeline</h2>
                   <div className="flex justify-between items-center mt-4"></div>
                   <div className="mt-4 overflow-scroll h-full">
-                    {timelines.map((event, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className="flex justify-center gap-4 items-center"
-                        >
-                          <div className="desc">
-                            <h3>{event.title}</h3>
-                            <p className="text-slate-400 line-clamp-1">{event.description}</p>
-                          </div>
-                          <div className="time">
-                            <p className=" whitespace-nowrap text-slate-600">
-                              {event.date}
-                            </p>
-                            <p className=" whitespace-nowrap text-slate-600">
-                              {event.time}
-                            </p>
-                          </div>
+                    {timeline.map((event, index) => (
+                      <div key={index} className="flex justify-center gap-4 items-center">
+                        <div className="desc">
+                          <h3 className=" font-semibold text-purple-500">{event.name}</h3>
                         </div>
-                      );
-                    })}
+                        <div className="time">
+                          <p className="whitespace-nowrap text-slate-600">
+                            {event.end_date}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

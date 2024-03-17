@@ -8,6 +8,9 @@ import { fetchUserCourses } from "@/lib/backend/User";
 import { DocumentData } from "firebase/firestore";
 import { matchPath } from 'react-router-dom';
 
+interface user {
+    uid: string;
+}
 
 const LeftSidebar = () => {
     const { pathname } = useLocation();
@@ -33,18 +36,29 @@ const LeftSidebar = () => {
         };
         fetchCourses();
     }, []);
+    let user: user | null = null;
+    const userItem = localStorage.getItem("user");
+
+    if (userItem) {
+        user = JSON.parse(userItem);
+    }
+
+    let userId: string | undefined;
+    if (user) {
+        userId = user.uid;
+    }
     return (
         <div className="hidden md:flex px-6 py-8 flex-col justify-between bg-gray-50 rounded-lg h-full w-full sticky left-0 top-0 border border-[#2f2f2f]">
             <div className='flex flex-col gap-11'>
                 <Link to="/">
                     <p className=" w-full h-[36px] text-[40px] font-bold text-[#080808]"><span className="text-purple-500">Gen</span>Learn</p>
                 </Link>
-                <Link to={`/profile/profileID`} className="flex justify-start place-items-start gap-3">
+                {/* <Link to={`/profile/profileID`} className="flex justify-start place-items-start gap-3">
                     <img src="/public/icons/profile-placeholder.svg" alt="  profile" className="h-10 w-10 rounded-full" />
                     <div className="flex flex-col">
                         <p className="text-[25px] font-bold leading-[140%] text-[#080808]">{"Shreyas"}</p>
                     </div>
-                </Link>
+                </Link> */}
                 <ul className="flex flex-col gap-8">
                     {sidebarLinks.map((link) => {
                         const isActive = pathname === link.route;
@@ -86,6 +100,7 @@ const LeftSidebar = () => {
                             </li>
                         </>
                     )}
+
                     <div>
                         <Button onClick={() => setShowCourses(!showCourses)} className={
                             `gap-2 rounded-lg text-[16px] font-medium leading-[140%] bg-[#a855f71f] text-[#080808] hover:bg-purple-500  hover:text-white transition flex  justify-start items-center w-full py-8 group ${showCourses ? "bg-purple-500 text-white" : ""}`

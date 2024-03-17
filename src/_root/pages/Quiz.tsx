@@ -72,7 +72,7 @@ export default function Quizzes() {
           <header className="bg-white shadow p-4 flex justify-between items-center">
             <div className="flex items-center">
               <h1 className="text-xl font-semibold text-gray-800">
-                Welcome, Theresa
+                Welcome,
               </h1>
               <span className="ml-2 text-gray-500">
                 Here's what happened with your learning system
@@ -106,25 +106,28 @@ export default function Quizzes() {
               {/* Widget */}
               <div className="bg-white p-4 rounded-lg shadow">
                 {attemptedQuizzes.length > 0 ? (
-                  <div className="flex flex-col gap-10 w-full h-full overflow-scroll overflow-x-hidden">
+                  <div className="flex p-4 w-full h-full overflow-scroll overflow-x-hidden">
                     <h1>Attempted Quizzes</h1>
-                    {attemptedQuizzes.map((quiz, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className={`flex items-center rounded-lg`}
-                        >
-                          <div className="w-full bg-green-500 h-full rounded-3xl flex justify-between items-center p-2 ">
-                            <h3 className="text-white font-semibold">
-                              {quiz.name}
-                            </h3>
-                            <p className="text-black bg-white p-4 rounded-2xl">
-                              {quiz.marks_scored}
-                            </p>
+                    <div className="flex flex-col gap-4 ">
+
+                      {attemptedQuizzes.map((quiz, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className={`flex gap-4 items-center rounded-lg `}
+                          >
+                            <div className="w-full bg-[#22c55eef] h-full rounded-3xl flex items-center p- ">
+                              <h3 className="text-white font-semibold">
+                                {quiz.name}
+                              </h3>
+                              <p className="text-black bg-white p-4 rounded-2xl">
+                                {quiz.marks_scored}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
                 ) : (
                   <div>No Attempted Quizzes</div>
@@ -143,7 +146,7 @@ export default function Quizzes() {
                           key={index}
                           className={`flex items-center rounded-lg`}
                         >
-                          <div className="w-full bg-red-500 h-full  rounded-3xl flex flex-col gap-2 justify-between items-center px-6 py-4">
+                          <div className="w-full bg-[#ef4444ef] h-full  rounded-3xl flex flex-col gap-2 justify-between items-center px-6 py-4">
                             <div className="flex flex-row justify-between w-full items-center gap-4">
                               <h3 className="text-white font-semibold">
                                 {quiz.name}

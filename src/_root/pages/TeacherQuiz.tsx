@@ -30,7 +30,7 @@ import { Submitted_Quiz, Quiz } from "@/lib/backend/User";
 
 export default function TeacherQuiz() {
   const { courseID } = useParams<string>();
-  const [unattemptedQuizzes, setunAttemptedQuizzes] = useState<Quiz[]>([]);
+  const [setunAttemptedQuizzes] = useState<Quiz[]>([]);
   const [attemptedQuizzes, setAttemptedQuizzes] = useState<Submitted_Quiz[]>(
     []
   );
@@ -69,7 +69,7 @@ export default function TeacherQuiz() {
           <header className="bg-white shadow p-4 flex justify-between items-center">
             <div className="flex items-center">
               <h1 className="text-xl font-semibold text-gray-800">
-                Welcome, Theresa
+                Welcome,
               </h1>
               <span className="ml-2 text-gray-500">
                 Here's what happened with your learning system
@@ -77,7 +77,7 @@ export default function TeacherQuiz() {
             </div>
             <div className="flex items-center">
               <div className="ml-4">
-                <button onClick={()=>{
+                <button onClick={() => {
                   navigate(`/course/${courseID}/quizzes/createQuiz`)
                 }} className="bg-green-500 rounded-full text-sm px-4 py-2">
                   Create Quiz <i className="fas fa-chevron-down"></i>
@@ -92,7 +92,7 @@ export default function TeacherQuiz() {
               {/* Widget */}
               <div className="bg-white w-full p-4 rounded-lg shadow">
                 {attemptedQuizzes.length > 0 ? (
-                  <div className="flex flex-col w-full h-full overflow-scroll overflow-x-hidden">
+                  <div className="flex flex-col w-full gap-4 h-full overflow-scroll overflow-x-hidden">
                     <h1>Created Quizzes</h1>
                     {attemptedQuizzes.map((quiz, index) => {
                       return (
@@ -116,7 +116,7 @@ export default function TeacherQuiz() {
                   <div>No Created Quizzes</div>
                 )}
               </div>
-              
+
             </div>
             {/* Charts */}
             {/* <div className="mt-4">

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
 import { InfinitySpin } from 'react-loader-spinner';
-
+import { useLocation } from 'react-router-dom';
 
 const TextSelect = ({ children }: { children: React.ReactNode }) => {
   const [showButton, setShowButton] = useState(false);
@@ -12,8 +12,19 @@ const TextSelect = ({ children }: { children: React.ReactNode }) => {
   const [explanation, setExplanation] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
 
   const handleMouseUp = () => {
+    const newPath = location.pathname;
+    if (location.pathname === '/') {
+      setSelectedText("");
+      return;
+    }
+    if (!(newPath.startsWith('/course/') && (newPath.includes('/quizzes')) || !(newPath.includes('/assignment')))) {
+      setSelectedText("");
+      return;
+    }
+
     const newText = window.getSelection()?.toString();
     if (newText) {
       setSelectedText(newText);
@@ -32,7 +43,6 @@ const TextSelect = ({ children }: { children: React.ReactNode }) => {
 
     setExplanation(data.data.explanation);
     setIsLoading(false);
-
   }
 
   const closeModal = () => {
