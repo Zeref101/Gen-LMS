@@ -25,8 +25,9 @@ const MCQ = () => {
       if (quizID) {
         const fetchedData = await fetchquiz(quizID);
         setData(fetchedData);
-        if (fetchedData && fetchedData.questions) {
+        if (fetchedData && "questions" in fetchedData) {
           setQuestions(fetchedData.questions);
+          console.log(data);
         }
       }
     }

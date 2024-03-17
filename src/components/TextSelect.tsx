@@ -60,6 +60,7 @@ const TextSelect = ({ children }: { children: React.ReactNode }) => {
           <InfinitySpin
             width="200"
             color="#7e22ce"
+            // @ts-ignore
             ariaLabel="infinity-spin-loading"
           /> :
           <p>{explanation}</p>}

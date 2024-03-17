@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { fetchUserCourses } from "@/lib/backend/User";
 import { DocumentData } from "firebase/firestore";
-import { matchPath } from 'react-router-dom';
 
 interface user {
     uid: string;
@@ -24,7 +23,7 @@ const LeftSidebar = () => {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const courses = await fetchUserCourses("hello");
+                const courses = await fetchUserCourses();
                 if (courses) {
                     setUserCourses(courses);
                 } else {
@@ -87,6 +86,7 @@ const LeftSidebar = () => {
                         <>
                             <li>
                                 <NavLink to={`/course/${courseId}/quizzes`} className="flex gap-4 text-[#080808] items-center hover:bg-purple-500 hover:text-white  rounded-lg p-4 group-hover:invert bg-[#a855f71f] group-hover:brightness-0 group-hover:transition"
+                                // @ts-ignore
                                     isActive={(match, location) => {
                                         // Check if the current location pathname is the same as the NavLink to prop
                                         return location.pathname === `/course/${courseId}/quizzes`;

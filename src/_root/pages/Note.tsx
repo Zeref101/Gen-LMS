@@ -48,7 +48,8 @@ const Note = () => {
                     <InfinitySpin
                         width="200"
                         color="#7e22ce"
-                        ariaLabel="infinity-spin-loading"
+                        //@ts-ignore
+                        ariaLabel="infinity-spin-loading" // Add the ariaLabel prop with the correct type declaration
                     />
                 ) : (
                     <div className=' flex h-screen flex-col gap-8 justify-start items-center w-full p-4 bg-white'>

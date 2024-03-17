@@ -43,6 +43,7 @@ const CreateQuiz = () => {
   const sendRequest = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    console.log(questionIndex);
     const userString = localStorage.getItem("user");
 
     // Parsing the string back to an object
@@ -111,6 +112,7 @@ const CreateQuiz = () => {
           <InfinitySpin
             width="200"
             color="#7e22ce"
+            // @ts-ignore
             ariaLabel="infinity-spin-loading"
           />
         )}

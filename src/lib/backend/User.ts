@@ -11,7 +11,6 @@ import {
   query,
   where,
   collection,
-  orderBy,
   QueryDocumentSnapshot,
 } from "firebase/firestore";
 import { db } from "./firebase.ts";
@@ -32,6 +31,18 @@ export interface Submitted_Quiz {
   // Add other quiz properties here
   marks_scored: number;
   saved_answers: string[];
+  name: string;
+}
+
+interface Course {
+  course_code: string;
+
+  course_id: string;
+
+  course_intro: string;
+
+  image_url: string;
+
   name: string;
 }
 export const handleSignup = async (email: string, password: string) => {
@@ -78,7 +89,7 @@ export const fetchUserNotes = async (userId: string) => {
   }
 };
 
-export const fetchUserCourses = async (userID: string) => {
+export const fetchUserCourses = async () => {
   try {
     const uid = "wfPc1lDadJcMcID4Nyyz";
     // const [courses, setCourses] = useState<DocumentData[]>([]);
@@ -164,11 +175,24 @@ export const fetchquiz = async (quizID: string) => {
   }
 };
 
-export const fetchTimeline = async (courseID: string) =>{
+export const fetchTimeline = async () =>{
   const uid = "wfPc1lDadJcMcID4Nyyz";
   axios.post(`http://192.168.47.237:8000/show_upcoming_quiz`,{
     student_id:uid
   }).then(response=>{
     console.log(response);
   })
+}
+
+export const fetchCourse = async (courseID: string)=>{
+  const courseRef = collection(db, "courses");
+  const q = query(courseRef, where("course_id", "==", courseID))
+  const courseSnap = await getDocs(q);
+  const courseData :Course[] = [];
+  (courseSnap.forEach((doc:QueryDocumentSnapshot)=>{
+    const docSnap = doc.data();
+    console.log(docSnap);
+    courseData.push({ id: doc.id, ...docSnap } as unknown as Course);
+  }))
+  return courseData;
 }

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
-import { Toaster } from "./ui/toaster";
 import { useToast } from "./ui/use-toast";
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
@@ -70,6 +69,7 @@ const MarkdownNotes: React.FC<MarkdownNotesProps> = ({ markdown, constraints = '
                 <InfinitySpin
                     width="200"
                     color="#4fa94d"
+                    // @ts-ignore
                     ariaLabel="infinity-spin-loading"
                 />
             ) : (

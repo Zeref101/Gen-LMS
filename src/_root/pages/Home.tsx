@@ -1,11 +1,16 @@
 // import React from 'react'
-import LeftSidebar from "../../components/LeftSidebar";
 import { useNavigate } from "react-router-dom";
 import { fetchUserCourses } from "@/lib/backend/User";
-import { DocumentData } from 'firebase/firestore';
+import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { InfinitySpin } from 'react-loader-spinner';
+import { InfinitySpin } from "react-loader-spinner";
 import axios from "axios";
+
+// interface InfinitySpinProps {
+//   width: string;
+//   color: string;
+//   ariaLabel: string;
+// }
 
 export default function Home() {
   const navigate = useNavigate();
@@ -17,62 +22,20 @@ export default function Home() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const courses = await fetchUserCourses("hello");
+        const courses = await fetchUserCourses();
         if (courses) {
           setUserCourses(courses);
         } else {
-          console.error('Error fetching user courses: courses is undefined');
+          console.error("Error fetching user courses: courses is undefined");
         }
       } catch (error) {
-        console.error('Error fetching user courses:', error);
+        console.error("Error fetching user courses:", error);
       } finally {
         setLoading(false);
       }
     };
     fetchCourses();
   }, []);
-  const courses = [
-    {
-      name: "Course 1",
-      description: "This is the first course",
-      icon: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Course 1",
-      description: "This is the first course",
-      icon: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Course 1",
-      description: "This is the first course",
-      icon: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Course 1",
-      description: "This is the first course",
-      icon: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Course 1",
-      description: "This is the first course",
-      icon: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Course 1",
-      description: "This is the first course",
-      icon: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Course 1",
-      description: "This is the first course",
-      icon: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Course 1",
-      description: "This is the first course",
-      icon: "https://via.placeholder.com/150",
-    },
-  ];
 
   const colors = [
     "linear-gradient(90deg, rgba(52,42,204,1) 0%, rgba(68,68,218,1) 40%, rgba(0,212,255,1) 100%)",
@@ -94,21 +57,21 @@ export default function Home() {
       course: "Python",
       progress: 0.2,
     },
-
   ];
-  const [timeline, setTimeline] = useState([])
+  const [timeline, setTimeline] = useState([]);
   useEffect(() => {
     const userItem = localStorage.getItem("user");
     if (userItem !== null) {
       const user = JSON.parse(userItem);
       if (user && user.uid) {
-        axios.post("http://3.109.203.255:80/show_upcoming_quiz", {
-          student_id: "wfPc1lDadJcMcID4Nyyz"
-        })
-          .then(res => {
+        axios
+          .post("http://3.109.203.255:80/show_upcoming_quiz", {
+            student_id: "wfPc1lDadJcMcID4Nyyz",
+          })
+          .then((res) => {
             setTimeline(res.data.quizes);
           })
-          .catch(err => {
+          .catch((err) => {
             console.error(err);
           });
       } else {
@@ -120,11 +83,13 @@ export default function Home() {
   console.log(currentDate);
   return (
     <>
+      // ...
       {loading ? (
         <InfinitySpin
           width="200"
           color="#7e22ce"
-          ariaLabel="infinity-spin-loading"
+          //@ts-ignore
+          ariaLabel="infinity-spin-loading" // Added ariaLabel property
         />
       ) : (
         <div className=" p-4 h-screen w-full">
@@ -135,7 +100,9 @@ export default function Home() {
                   <i className="fas fa-book"></i>
                 </div>
                 <div>
-                  <h1 className="text-2xl font-semibold leading-[140%] text-purple-700 ">Course Activity</h1>
+                  <h1 className="text-2xl font-semibold leading-[140%] text-purple-700 ">
+                    Course Activity
+                  </h1>
                   <p className="text-gray-400">
                     {new Date().toJSON().slice(0, 10)}
                   </p>
@@ -145,14 +112,15 @@ export default function Home() {
             <div className="flex gap-4 h-full w-full">
               <div className="basis-3/5 h-full bg-gray-50 p-4 rounded-2xl">
                 <div className="flex justify-between items-center">
-                  <div className="flex space-x-4 items-center">
-                  </div>
-                  <div className="flex space-x-4 items-center">
-                  </div>
+                  <div className="flex space-x-4 items-center"></div>
+                  <div className="flex space-x-4 items-center"></div>
                 </div>
                 <div className="h-full overflow-scroll overflow-x-hidden">
                   {userCourses.map((course: DocumentData, index: number) => (
-                    <div key={index} className={`flex items-center p-4 rounded-lg`}>
+                    <div
+                      key={index}
+                      className={`flex items-center p-4 rounded-lg`}
+                    >
                       <div
                         style={{
                           background: colors[index],
@@ -163,7 +131,6 @@ export default function Home() {
                           className=" w-[40px] h-[40px]"
                           src={course.image_url}
                           alt="courseImg"
-
                         />
                         <div className="content basis-4/6">
                           <h3 className="text-white font-semibold">
@@ -188,7 +155,9 @@ export default function Home() {
               </div>
               <div className="flex grow basis-1/5 gap-2 flex-col h-full overflow-hidden">
                 <div className="bg-gray-50 p-4 rounded-2xl h-1/2 basis-1/2">
-                  <h2 className=" text-2xl font-semibold text-purple-700">My learning</h2>
+                  <h2 className=" text-2xl font-semibold text-purple-700">
+                    My learning
+                  </h2>
                   <div className=" h-full overflow-hidden">
                     {progress.map((course, index) => (
                       <div
@@ -196,7 +165,9 @@ export default function Home() {
                         className="flex flex-col justify-between items-center"
                       >
                         <div className="flex-grow">
-                          <h1 className="font-semibold text-purple-600 text-xl">{course.course}</h1>
+                          <h1 className="font-semibold text-purple-600 text-xl">
+                            {course.course}
+                          </h1>
                         </div>
                         <div className="w-[80%] h-4 rounded-3xl bg-slate-300">
                           <div
@@ -212,16 +183,25 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="bg-gray-50 p-4 rounded-2xl overflow-hidden basis-1/2">
-                  <h2 className="text-2xl font-semibold text-purple-700">Timeline</h2>
+                  <h2 className="text-2xl font-semibold text-purple-700">
+                    Timeline
+                  </h2>
                   <div className="flex justify-between items-center mt-4"></div>
                   <div className="mt-4 overflow-scroll h-full">
                     {timeline.map((event, index) => (
-                      <div key={index} className="flex justify-center gap-4 items-center">
+                      <div
+                        key={index}
+                        className="flex justify-center gap-4 items-center"
+                      >
                         <div className="desc">
-                          <h3 className=" font-semibold text-purple-500">{event.name}</h3>
+                          <h3 className=" font-semibold text-purple-500">
+                            {/*@ts-ignore*/}
+                            {event.name}
+                          </h3>
                         </div>
                         <div className="time">
                           <p className="whitespace-nowrap text-slate-600">
+                            {/*@ts-ignore*/}
                             {event.end_date}
                           </p>
                         </div>
@@ -235,6 +215,5 @@ export default function Home() {
         </div>
       )}
     </>
-
   );
 }
