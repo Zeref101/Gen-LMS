@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { fetchquiz } from "@/lib/backend/User";
 import { DocumentData } from "firebase/firestore";
 import axios from "axios";
+import { db } from '../../lib/backend/firebase'; // replace with your firebase import
 
 const MCQ = () => {
   const { quizID } = useParams();
@@ -38,15 +39,15 @@ const MCQ = () => {
     console.log(selectedAnswerIndex + 1);
     setAnswers((prev) => [
       ...prev,
-      selectedAnswerIndex+1,
+      selectedAnswerIndex + 1,
     ]);
     setResult((prev) =>
       selectedAnswer
         ? {
-            ...prev,
-            score: prev.score + 5,
-            correctAnswers: prev.correctAnswers + 1,
-          }
+          ...prev,
+          score: prev.score + 5,
+          correctAnswers: prev.correctAnswers + 1,
+        }
         : { ...prev, wrongAnswers: prev.wrongAnswers + 1 }
     );
     if (activeQuestion !== questions.length - 1) {
@@ -60,8 +61,9 @@ const MCQ = () => {
           saved_answers: answers,
           name: "Python",
         });
+
         axios
-          .post("http://192.168.47.237:8000/save_student_answers/", {
+          .post(`${process.env.URL}/save_student_answers/`, {
             quiz_id: quizID,
             student_id: "wfPc1lDadJcMcID4Nyyz",
             saved_answers: answers,
@@ -85,13 +87,13 @@ const MCQ = () => {
     console.log(
       answer,
       questions[activeQuestion].choices[
-        questions[activeQuestion].correct_answer - 1
+      questions[activeQuestion].correct_answer - 1
       ]
     );
 
     if (
       questions[activeQuestion].choices[
-        questions[activeQuestion].correct_answer - 1
+      questions[activeQuestion].correct_answer - 1
       ] === answer
     ) {
       setSelectedAnswer(true);
