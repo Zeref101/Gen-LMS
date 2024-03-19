@@ -104,17 +104,17 @@ export default function Quizzes() {
               {/* Widget */}
               <div className="bg-white p-4 rounded-lg shadow">
                 {attemptedQuizzes.length > 0 ? (
-                  <div className="flex p-4 w-full h-full overflow-scroll overflow-x-hidden">
+                  <div className="flex flex-col p-4 w-full h-full overflow-scroll overflow-x-hidden">
                     <h1>Attempted Quizzes</h1>
-                    <div className="flex flex-col gap-4 ">
+                    <div className="flex flex-col  gap-4 ">
 
                       {attemptedQuizzes.map((quiz, index) => {
                         return (
                           <div
                             key={index}
-                            className={`flex gap-4 items-center rounded-lg `}
+                            className={`flex gap-4 items-center  rounded-lg `}
                           >
-                            <div className="w-full bg-[#22c55eef] h-full rounded-3xl flex items-center p- ">
+                            <div className="w-full bg-[#22c55eef] h-full rounded-3xl flex items-center justify-between p-1 ">
                               <h3 className="text-white font-semibold">
                                 {quiz.name}
                               </h3>
