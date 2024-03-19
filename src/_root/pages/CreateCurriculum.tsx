@@ -17,7 +17,7 @@ const CreateCurriculum = () => {
         };
 
         try {
-            const response = await axios.post('http://127.0.0.1:5500/create_curriculum/', requestBody);
+            const response = await axios.post('http://127.0.0.1:8000/create_curriculum/', requestBody);
             console.log(response.data);
         } catch (error) {
             console.error(error);
