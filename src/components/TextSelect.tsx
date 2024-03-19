@@ -35,7 +35,7 @@ const TextSelect = ({ children }: { children: React.ReactNode }) => {
   const handleButtonClick = async () => {
     setIsLoading(true);
     setModalIsOpen(true);
-    const data = await axios.get("http://127.0.0.1:8000/get_explanation", {
+    const data = await axios.get(`${process.env.URL}/get_explanation`, {
       params: {
         prompt: selectedText
       }
