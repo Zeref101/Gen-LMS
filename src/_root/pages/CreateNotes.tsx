@@ -32,7 +32,7 @@ const CreateNotes = () => {
         console.log(requestBody)
 
         try {
-            const result = await axios.post('http://127.0.0.1:8000/create_curriculum/', requestBody);
+            const result = await axios.post(`${process.env.URL}/create_curriculum/`, requestBody);
             setResData(result.data.curriculum)
         } catch (error) {
             console.error(error);
@@ -45,7 +45,7 @@ const CreateNotes = () => {
         <>
             <div className=" h-screen w-full flex justify-center items-center">
                 {isLoading && (
-                    
+
                     <InfinitySpin
                         width="200"
                         color="#7e22ce"
@@ -67,7 +67,7 @@ const CreateNotes = () => {
                 {resData && !isLoading && (
                     <div className="p-4 mt-6 w-full drop-shadow-md inset-2">
 
-                        <MarkdownNotes markdown={resData} constraints={constraints} subject={subject} />
+                        <MarkdownNotes markdown={resData} constraints={constraints} subject={subject} user_id="cache" />
 
                     </div>
                 )}

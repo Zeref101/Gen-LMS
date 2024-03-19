@@ -40,13 +40,27 @@ export default function CoursePage() {
   return (
     <div className="flex h-screen w-full">
       <div className="h-full w-full flex flex-col">
-        <div style={{
-                          background: "linear-gradient(90deg, rgba(52,42,204,1) 0%, rgba(68,68,218,1) 40%, rgba(0,212,255,1) 100%)",
-                        }} className="intro h-2/5 text-white flex justify-center gap-10 items-center">
-          {data && <div className="h-full py-20 w-1/3"><img className="h-full w-full" src={data[0].image_url} alt="" /></div>}
+        <div
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(52,42,204,1) 0%, rgba(68,68,218,1) 40%, rgba(0,212,255,1) 100%)",
+          }}
+          className="intro h-2/5 text-white flex justify-center gap-10 items-center"
+        >
+          {data && (
+            <div className="h-full py-20 w-1/3">
+              <img className="h-full w-full" src={data[0].image_url} alt="" />
+            </div>
+          )}
           <div className="flex w-3/4 h-full flex-col justify-center items-start gap-10">
-            {data && <div className="font-extrabold text-6xl">{data[0].name}</div>}
-            {data && <div className="font-semibold text-2xl">{data[0].course_intro}</div>}
+            {data && (
+              <div className="font-extrabold text-6xl">{data[0].name}</div>
+            )}
+            {data && (
+              <div className="font-semibold text-2xl">
+                {data[0].course_intro}
+              </div>
+            )}
           </div>
         </div>
         <div className="cont relative h-3/5 overflow-hidden flex w-full">
@@ -68,51 +82,44 @@ export default function CoursePage() {
             <VerticalTimeline>
               <VerticalTimelineElement
                 className="vertical-timeline-element--work"
-                date="2011 - present"
+                date="22-03-24"
                 dateClassName="mx-4"
                 iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
               >
-                <h3 className="vertical-timeline-element-title">
-                  Art Director
-                </h3>
-                <h4 className="vertical-timeline-element-subtitle">
-                  San Francisco, CA
-                </h4>
+                <h3 className="vertical-timeline-element-title">Quiz</h3>
+                <h4 className="vertical-timeline-element-subtitle">Java</h4>
                 <p>
-                  Creative Direction, User Experience, Visual Design, SEO,
-                  Online Marketing
+                  Basic Python Syntax and Data Types, Control Flow Statements
+                  (if-else, loops) Functions and Modules
                 </p>
               </VerticalTimelineElement>
               <VerticalTimelineElement
                 className="vertical-timeline-element--work"
-                date="2010 - 2011"
+                date="20-03-24"
                 dateClassName="mx-4"
                 iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
               >
-                <h3 className="vertical-timeline-element-title">
-                  Art Director
-                </h3>
+                <h3 className="vertical-timeline-element-title">Quiz</h3>
                 <h4 className="vertical-timeline-element-subtitle">
-                  San Francisco, CA
+                  Java
                 </h4>
                 <p>
-                  Creative Direction, User Experience, Visual Design, SEO,
-                  Online Marketing
+                  Basic Js Syntax and Data Types, Control Flow Statements
+                  (if-else, loops) Functions and ES6
                 </p>
               </VerticalTimelineElement>
               <VerticalTimelineElement
                 className="vertical-timeline-element--work"
-                date="2008 - 2010"
+                date="26-03-24"
                 dateClassName="mx-4"
                 iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
               >
-                <h3 className="vertical-timeline-element-title">
-                  Web Designer
-                </h3>
-                <h4 className="vertical-timeline-element-subtitle">
-                  Los Angeles, CA
-                </h4>
-                <p>User Experience, Visual Design</p>
+                <h3 className="vertical-timeline-element-title">Assignment</h3>
+                <h4 className="vertical-timeline-element-subtitle">Python</h4>
+                <p>
+                  Basic Python Syntax and Data Types, Control Flow Statements
+                  (if-else, loops) Functions and Modules
+                </p>
               </VerticalTimelineElement>
             </VerticalTimeline>
           </div>
