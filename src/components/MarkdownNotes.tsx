@@ -14,9 +14,10 @@ interface MarkdownNotesProps {
     markdown: string;
     constraints?: string;
     subject?: string;
+    user_id?: string;
 }
 
-const MarkdownNotes: React.FC<MarkdownNotesProps> = ({ markdown, constraints = '', subject = '' }) => {
+const MarkdownNotes: React.FC<MarkdownNotesProps> = ({ markdown, constraints = '', subject = '', user_id = '' }) => {
 
     const { toast } = useToast();
     const [editableMarkdown, setEditableMarkdown] = useState(markdown);
@@ -48,11 +49,13 @@ const MarkdownNotes: React.FC<MarkdownNotesProps> = ({ markdown, constraints = '
         const requestBody = {
             markdown_text: editableMarkdown,
             constraints: constraints,
-            subject: subject
+            subject: subject,
+            user_id: user_id
+
         };
 
         try {
-            const response = await axios.post('http://localhost:8000/generate_md/', requestBody);
+            const response = await axios.post(`${process.env.URL}/generate_md/`, requestBody);
             console.log(response.data);
             navigate('/notes')
 

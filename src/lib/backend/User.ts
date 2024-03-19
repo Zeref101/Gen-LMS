@@ -129,32 +129,32 @@ export const fetchStudentquiz = async (
   });
 
   // Fetch the user document where the user_id matches the current user
-const usersRef = collection(db, "users");
-const uq = query(usersRef, where("user_id", "==", "wfPc1lDadJcMcID4Nyyz"));
-const userQuerySnapshot = await getDocs(uq);
-// console.log(doc.data().attempted_quizzes)
+  const usersRef = collection(db, "users");
+  const uq = query(usersRef, where("user_id", "==", "wfPc1lDadJcMcID4Nyyz"));
+  const userQuerySnapshot = await getDocs(uq);
+  // console.log(doc.data().attempted_quizzes)
 
-// Get the attempted_quizzes field of the user document
-let attemptedQuizzes: string[] = [];
-userQuerySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-  const userData = doc.data();
-  attemptedQuizzes = userData.submitted_quizzes;
-  console.log(userData)
-});
-console.log(attemptedQuizzes, "hi");
-
-// Fetch the quizzes that have been attempted by the user
-const submitsPromises = attemptedQuizzes.map(async (quizId) => {
-  const submit_quizzesRef = collection(db, "submit_quiz");
-  const sq = query(submit_quizzesRef, where("user_id", "==", quizId));
-  const submitquerySnapshot = await getDocs(sq);
-  const submitfetchedQuizzes: Submitted_Quiz[] = [];
-  submitquerySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-    const quizData = doc.data();
-    submitfetchedQuizzes.push({ id: doc.id, ...quizData } as Submitted_Quiz);
+  // Get the attempted_quizzes field of the user document
+  let attemptedQuizzes: string[] = [];
+  userQuerySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+    const userData = doc.data();
+    attemptedQuizzes = userData.submitted_quizzes;
+    console.log(userData);
   });
-  return submitfetchedQuizzes;
-});
+  console.log(attemptedQuizzes, "hi");
+
+  // Fetch the quizzes that have been attempted by the user
+  const submitsPromises = attemptedQuizzes.map(async (quizId) => {
+    const submit_quizzesRef = collection(db, "submit_quiz");
+    const sq = query(submit_quizzesRef, where("user_id", "==", quizId));
+    const submitquerySnapshot = await getDocs(sq);
+    const submitfetchedQuizzes: Submitted_Quiz[] = [];
+    submitquerySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+      const quizData = doc.data();
+      submitfetchedQuizzes.push({ id: doc.id, ...quizData } as Submitted_Quiz);
+    });
+    return submitfetchedQuizzes;
+  });
 
   // Wait for all submitted quizzes to be fetched
   const submittedQuizzesArray = await Promise.all(submitsPromises);
@@ -175,24 +175,26 @@ export const fetchquiz = async (quizID: string) => {
   }
 };
 
-export const fetchTimeline = async () =>{
+export const fetchTimeline = async () => {
   const uid = "wfPc1lDadJcMcID4Nyyz";
-  axios.post(`http://192.168.47.237:8000/show_upcoming_quiz`,{
-    student_id:uid
-  }).then(response=>{
-    console.log(response);
-  })
-}
+  axios
+    .post(`${process.env.URL}/show_upcoming_quiz`, {
+      student_id: uid,
+    })
+    .then((response) => {
+      console.log(response);
+    });
+};
 
-export const fetchCourse = async (courseID: string)=>{
+export const fetchCourse = async (courseID: string) => {
   const courseRef = collection(db, "courses");
-  const q = query(courseRef, where("course_id", "==", courseID))
+  const q = query(courseRef, where("course_id", "==", courseID));
   const courseSnap = await getDocs(q);
-  const courseData :Course[] = [];
-  (courseSnap.forEach((doc:QueryDocumentSnapshot)=>{
+  const courseData: Course[] = [];
+  courseSnap.forEach((doc: QueryDocumentSnapshot) => {
     const docSnap = doc.data();
     console.log(docSnap);
     courseData.push({ id: doc.id, ...docSnap } as unknown as Course);
-  }))
+  });
   return courseData;
-}
+};

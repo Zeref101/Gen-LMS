@@ -29,8 +29,7 @@ import { Submitted_Quiz, Quiz } from "@/lib/backend/User";
 
 export default function TeacherQuiz() {
   const { courseID } = useParams<string>();
-  const [setunAttemptedQuizzes] = useState<Quiz[]>([]);
-  const [attemptedQuizzes, setAttemptedQuizzes] = useState<Submitted_Quiz[]>(
+  const [unAttemptedQuizzes, setUnAttemptedQuizzes] = useState<Quiz[]>([]); const [attemptedQuizzes, setAttemptedQuizzes] = useState<Submitted_Quiz[]>(
     []
   );
   const navigate = useNavigate();
@@ -50,7 +49,7 @@ export default function TeacherQuiz() {
           (quiz) => !attemptedQuizzesSet.has(quiz.id)
         );
         console.log("unattempted", unattemptedQuizzes);
-        setunAttemptedQuizzes(unattemptedQuizzes); // Assuming you wanted unattempted here based on your filter logic
+        setUnAttemptedQuizzes(unattemptedQuizzes);
         console.log(submitted, "submitted");
         if (submitted.length > 0) {
           setAttemptedQuizzes(submitted);
