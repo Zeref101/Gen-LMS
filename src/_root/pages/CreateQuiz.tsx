@@ -25,7 +25,7 @@ interface data {
 }
 
 const CreateQuiz = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const { courseID } = useParams();
   console.log(courseID);
   const [syllabus, setSyllabus] = useState("");
@@ -67,7 +67,7 @@ const CreateQuiz = () => {
 
     try {
       const result = await axios.post(
-        "http://192.168.47.237:8000/generate_quiz/",
+        `${process.env.URL}/generate_quiz/`,
         requestBody
       );
       setResData(result.data);
@@ -80,17 +80,17 @@ const CreateQuiz = () => {
 
   const handleSubmit = async () => {
     const id = () => {
-        if (resData) return resData[0].quiz_id;
-      }
+      if (resData) return resData[0].quiz_id;
+    }
     console.log({
-        questions: resData,
-        quiz_id: id(),
-      });
+      questions: resData,
+      quiz_id: id(),
+    });
     try {
       setIsLoading(true);
       // resData.quiz_id = quizID;
       const result = await axios.post(
-        "http://192.168.47.237:8000/update_quiz/",
+        `${process.env.URL}/update_quiz/`,
         {
           questions: resData,
           quiz_id: id(),
