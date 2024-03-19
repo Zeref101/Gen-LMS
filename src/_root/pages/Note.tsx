@@ -57,7 +57,7 @@ const Note = () => {
                         <div className=' flex flex-wrap gap-4 w-[800px] justify-start items-start'>
                             {noteKeys && noteKeys.length > 0 && noteKeys[0].map((note, index) => (
                                 <Link to={`/notes/${note}`} key={index}>
-                                    <div className="card drop-shadow-lg">
+                                    <div className="card drop-shadow-lg p-4">
                                         <div className="tools">
                                             <div className="circle">
                                                 <span className="red box"></span>
@@ -69,7 +69,7 @@ const Note = () => {
                                                 <span className="green box"></span>
                                             </div>
                                         </div>
-                                        <div className=" text-white font-bold flex justify-center items-center text-[28px]">
+                                        <div className=" text-white font-bold flex justify-center items-center text-[25px]">
                                             {note}
                                         </div>
                                     </div>
