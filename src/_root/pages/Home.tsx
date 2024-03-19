@@ -64,7 +64,7 @@ export default function Home() {
     if (userItem !== null) {
       const user = JSON.parse(userItem);
       if (user && user.uid) {
-        axios.post("http://localhost:8000/show_upcoming_quiz", {
+        axios.post(`${process.env.URL}/show_upcoming_quiz`, {
           student_id: "wfPc1lDadJcMcID4Nyyz"
         })
           .then(res => {
@@ -82,7 +82,6 @@ export default function Home() {
   console.log(currentDate);
   return (
     <>
-      // ...
       {loading ? (
         <InfinitySpin
           width="200"
