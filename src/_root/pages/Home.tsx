@@ -64,11 +64,10 @@ export default function Home() {
     if (userItem !== null) {
       const user = JSON.parse(userItem);
       if (user && user.uid) {
-        axios
-          .post("http://3.109.203.255:80/show_upcoming_quiz", {
-            student_id: "wfPc1lDadJcMcID4Nyyz",
-          })
-          .then((res) => {
+        axios.post("http://localhost:8000/show_upcoming_quiz", {
+          student_id: "wfPc1lDadJcMcID4Nyyz"
+        })
+          .then(res => {
             setTimeline(res.data.quizes);
           })
           .catch((err) => {
